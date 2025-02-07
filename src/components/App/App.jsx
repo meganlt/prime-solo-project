@@ -29,16 +29,7 @@ function App() {
       
       <main>
         <Routes>
-          <Route 
-            exact path="/"
-            element={
-              user.id ? (
-                <HomePage /> // Render HomePage for authenticated user.
-              ) : (
-                <Navigate to="/login" replace /> // Redirect unauthenticated user.
-              )
-            }
-          />
+          
           <Route 
             exact path="/login"
             element={
@@ -88,6 +79,16 @@ function App() {
                 <Navigate to="/login" replace /> // Redirect unauthenticated user.
               )
             } 
+          />
+          <Route 
+            exact path="/"
+            element={
+              user.id ? (
+                <HomePage /> // Render HomePage for authenticated user.
+              ) : (
+                <Navigate to="/login" replace /> // Redirect unauthenticated user.
+              )
+            }
           />
           <Route
             path="*"

@@ -36,7 +36,7 @@ function Nav() {
             <li>
               <NavLink to="/aboutme"><img src="https://placecats.com/40/40"/>{user.username} <span className="material-symbols-outlined">settings</span></NavLink>
               <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-              <NavLink to="/mytrinkets" className="logout" onClick={logOut}>Log Out<span className="material-symbols-outlined">logout</span></NavLink>
+              <a className="logout" onClick={logOut}>Log Out<span className="material-symbols-outlined">logout</span></a>
             </li>
           </>
         )

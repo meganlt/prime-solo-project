@@ -27,7 +27,7 @@ CREATE TABLE "items" (
   "category" VARCHAR(100) NOT NULL,
   "term" VARCHAR(100) NOT NULL,
   "status" VARCHAR(100) NOT NULL,
-  "description" VARCHAR(2000),
+  "description" VARCHAR(2000)
 );
 
 INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description )
