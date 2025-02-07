@@ -4,6 +4,7 @@ import useStore from '../../zustand/store';
 
 function Nav() {
   const user = useStore((store) => store.user);
+  const logOut = useStore((state) => state.logOut);
 
   return (
     <nav>
@@ -28,6 +29,14 @@ function Nav() {
             </li>
             <li>
               <NavLink to="/mytrinkets">My Trinkets</NavLink>
+            </li>
+            <li>
+              <NavLink to="/myforest">My Forest</NavLink>
+            </li>
+            <li>
+              <NavLink to="/aboutme"><img src="https://placecats.com/40/40"/>{user.username} <span className="material-symbols-outlined">settings</span></NavLink>
+              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+              <NavLink to="/mytrinkets" className="logout" onClick={logOut}>Log Out<span className="material-symbols-outlined">logout</span></NavLink>
             </li>
           </>
         )

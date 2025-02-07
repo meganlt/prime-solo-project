@@ -1,4 +1,10 @@
 
+/*Imports */
+
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=favorite,home,logout,search,settings');
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300');
+
 /* Box-Sizing Fix: */
   /* https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 *,
@@ -11,8 +17,10 @@
 body{
   --dark-cool-primary: 34,11,67; /* dark purple*/
   --med-cool-primary: 155, 54, 255; /* medium purple*/
+  --light-cool: 232, 174, 210; /*light pink*/
   --dark-forest-primary: 63, 107, 104; /* deep blue green */
-  --med-forest-primary: 134, 141, 90 /* medium yellow green*/
+  --med-forest-primary: 134, 141, 90; /* medium yellow green*/
+  --light-warm: 255,240,216 /*light yellow */
 }
 
 
@@ -59,23 +67,32 @@ header {
 /* Nav Styles: */
 nav ul {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 40px;
   margin: 0;
   padding: 0;
   list-style: none;
-}
 
-nav a {
-  color: rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-}
+  li { 
+    display: flex;
+    align-items: center;
+  }
 
-nav a.active {
-  color: rgba(0, 0, 0, 0.75);
-  text-decoration: underline;
-  text-decoration-color: #20c997;
-  text-decoration-thickness: 2px;
-  transition: 0.7s;
+  li a {
+    display: flex;
+    align-items: center;
+  }
+
+  a {
+    color: rgba( var(--light-warm),1);
+    text-decoration: none;
+
+    &.active {
+      color: rgba(var(--light-cool), 0.75);
+      transition: 0.7s;
+    }
+  }
+
 }
 
 /* Form Styles: */

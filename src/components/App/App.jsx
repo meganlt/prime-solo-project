@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 
 import useStore from '../../zustand/store';
-import Header from '../Header/Header';
 
+import Header from '../Header/Header';
 import HomePage from '../HomePage/HomePage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';

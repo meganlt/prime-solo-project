@@ -10,9 +10,6 @@ function HomePage() {
       <h2>Home Page</h2>
       <p>Your username is: {user.username}</p>
       <p>Your ID is: {user.id}</p>
-      <button onClick={logOut}>
-        Log Out
-      </button>
     </>
   );
 }

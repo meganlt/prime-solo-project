@@ -14,6 +14,7 @@ const createUserSlice = (set, get) => ({
     try {
       const { data } = await axios.get('/api/user');
       set({ user: data });
+      console.log(data);
     } catch (err) {
       console.log('fetchUser error:', err);
       set({user : {}});
