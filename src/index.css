@@ -7,6 +7,15 @@
   box-sizing: border-box;
 }
 
+/* Colors */
+body{
+  --dark-cool-primary: 34,11,67; /* dark purple*/
+  --med-cool-primary: 155, 54, 255; /* medium purple*/
+  --dark-forest-primary: 63, 107, 104; /* deep blue green */
+  --med-forest-primary: 134, 141, 90 /* medium yellow green*/
+}
+
+
 /* Remove Margin/Padding: */
 html, body {
   margin: 0;
@@ -16,8 +25,8 @@ html, body {
 /* Typography: */
 body {
   font-family: sans-serif;
-  background-color: #f0f0f0;
-  color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(var(--dark-cool-primary), 1);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* Basic Header/Main/Footer Flexbox Layout: */
@@ -40,6 +49,11 @@ header, footer {
   flex-basis: 6em;
   align-items: center;
   justify-content: space-between;
+}
+
+header {
+  background-color: rgba(var(--dark-forest-primary), 0.75);
+  
 }
 
 /* Nav Styles: */

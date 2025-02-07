@@ -24,15 +24,14 @@ function Nav() {
         user.id && (
           <>
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">My Den</NavLink>
+            </li>
+            <li>
+              <NavLink to="/mytrinkets">My Trinkets</NavLink>
             </li>
           </>
         )
       }
-      {/* Show these links regardless of auth status: */}
-        <li>
-          <NavLink to="/about">About</NavLink>
-        </li>
       </ul>
     </nav>
   );

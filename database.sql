@@ -13,8 +13,52 @@ CREATE TABLE "user" (
   "username" VARCHAR (80) UNIQUE NOT NULL,
   "password" VARCHAR (1000) NOT NULL,
   "inserted_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
-  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now()
+  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "avatar" VARCHAR(1000),
+  "role" VARCHAR(50),
+  "available_status" BOOLEAN
 );
+
+CREATE TABLE "items" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(1000) NOT NULL,
+  "owner_user_id" INT,
+  "holder_user_id" INT,
+  "category" VARCHAR(100) NOT NULL,
+  "term" VARCHAR(100) NOT NULL,
+  "status" VARCHAR(100) NOT NULL,
+  "description" VARCHAR(2000),
+);
+
+INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description )
+VALUES 
+('Heat Gun', 1, 1, 'tool', 'Long Term Borrow', 'available', 'Useful tool for embossing, melting thermoplastic, or curing polymer clay!'),
+('Animal Crossing', 1, 1, 'video-game', 'Short Term Borrow', 'available', 'Such a cozy little game!'),
+('Game of Thrones: Full Series on DVD', 2, 2, 'DVD', 'Giveaway', 'available', 'I never want to watch this again, so anyone can keep it, or burn it if you want.');
+
+CREATE TABLE "images" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(1000) NOT NULL,
+  "type" VARCHAR(50) NOT NULL,
+  "item_id" INT,
+  "user_id" INT
+);
+
+-- JUNCTION TABLE
+CREATE TABLE "items_images" (
+  "id" SERIAL PRIMARY KEY,
+  "item_id" INT REFERENCES "items"
+  "image_id" INT REFERENCES "images"
+);
+
+CREATE TABLE "messages" {
+  "id" SERIAL PRIMARY KEY,
+  "type" VARCHAR(50) NOT NULL,
+  "title" VARCHAR(255) NOT NULL,
+  "body" VARCHAR(2000) NOT NULL,
+  "sent_by" INT REFERENCES "user",
+  "sent_to" INT REFERENCES "user"
+}
 
 
 -------------------------------------------------------
