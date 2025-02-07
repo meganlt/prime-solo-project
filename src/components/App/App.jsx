@@ -12,7 +12,8 @@ import HomePage from '../HomePage/HomePage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import MyTrinkets from '../MyTrinkets/MyTrinkets';
-
+import MyForest from '../MyForest/MyForest';
+import AboutMe from '../AboutMe/AboutMe';
 
 function App() {
   const user = useStore((state) => state.user);
@@ -63,6 +64,26 @@ function App() {
             element={
               user.id ? (
                 <MyTrinkets /> // Render MyTrinkets for authenticated user.
+              ) : (
+                <Navigate to="/login" replace /> // Redirect unauthenticated user.
+              )
+            } 
+          />
+          <Route 
+            exact path="/myforest"
+            element={
+              user.id ? (
+                <MyForest /> // Render MyForest for authenticated user.
+              ) : (
+                <Navigate to="/login" replace /> // Redirect unauthenticated user.
+              )
+            } 
+          />
+          <Route 
+            exact path="/aboutme"
+            element={
+              user.id ? (
+                <AboutMe /> // Render AboutMe for authenticated user.
               ) : (
                 <Navigate to="/login" replace /> // Redirect unauthenticated user.
               )
