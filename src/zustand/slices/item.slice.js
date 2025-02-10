@@ -7,17 +7,16 @@ axios.defaults.withCredentials = true;
 
 
 const itemSlice = (set, get) => ({
-  trinkets: {},
-  fetchTrinkets: async () => {
-    //  Retrieves the current user's data from the /api/user endpoint.
-    try {
-      const { data } = await axios.get('/api/items');
-      set({ trinkets: data });
-      console.log(data);
-    } catch (err) {
-      console.log('fetchUser error:', err);
-      set({trinkets : {}});
-    }
+  userTrinkets: {},
+  fetchUserTrinkets: function(userId) {
+    console.log('in fetchUserTrinkets. UserID:', userId);
+    axios.get(`/api/items/${userId}`).then( function(response){
+      console.log(response.data);
+      set( { userTrinkets: response.data } );
+    }).catch( function(err){
+      console.log(err);
+      alert('error getting users trinkets');
+    })
   }
 })
 

@@ -19,9 +19,11 @@ router.get('/', (req, res) => {
   })
 });
 
-router.get('/user', (req, res) => {
+router.get('/:userId', (req, res) => {
+  console.log('in GET/userID:', req.params);
+  const userId = req.params.userId;
   const queryString = `SELECT * from "items" WHERE "owner_user_id"= $1;`
-  const values = [1] ;
+  const values = [userId] ;
   pool.query( queryString, values ).then((results)=>{
     res.send(results.rows);
   }).catch( (err)=>{

@@ -5,16 +5,17 @@ import useStore from '../../zustand/store';
 function MyTrinkets() {
   const user = useStore((state) => state.user);
   const fetchUser = useStore((state) => state.fetchUser);
-  const trinkets = useStore( (state)=>state.trinkets );
-  const fetchTrinkets = useStore( (state)=>state.fetchTrinkets);
+  const fetchUserTrinkets = useStore( (state)=>state.fetchUserTrinkets);
+  const userTrinkets = useStore((state) => state.userTrinkets );
 
   useEffect( ()=>{
     fetchUser();
-    fetchTrinkets();
+    fetchUserTrinkets(user.id);
   }, [] );
 
   
-  console.log('trinkets', trinkets);
+  console.log('user data:', user.id);
+ 
   // TO DO: figure out why this isn't working:
   // const userTrinkets = trinkets.filter( (trinket)=>(trinket.owner_user_id == user.id));
 
@@ -22,10 +23,8 @@ function MyTrinkets() {
     <>
       <h1>MyTrinkets</h1>
       <button className="button"><span className="material-symbols-outlined">add</span>Add New Trinket</button>
-      <h2>All trinkets:</h2>
-      {/* {JSON.stringify(trinkets)} */}
-      <h2>Just User's Trinkets</h2>
-      {/* {JSON.stringify(userTrinkets)} */}
+      <h2>{user.username}'s Trinkets</h2>
+      {JSON.stringify(userTrinkets)}
     </>
   );
 }
