@@ -14,14 +14,20 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import MyTrinkets from '../MyTrinkets/MyTrinkets';
 import MyForest from '../MyForest/MyForest';
 import AboutMe from '../AboutMe/AboutMe';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 function App() {
   const user = useStore((state) => state.user);
+  const isLoading = useStore((state)=>state.isUserLoading)
   const fetchUser = useStore((state) => state.fetchUser);
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  if (isLoading){
+    return <p>Loading...</p>
+  }
 
   return (
     <>
@@ -29,7 +35,16 @@ function App() {
       
       <main>
         <Routes>
-          
+          <Route 
+              exact path="/"
+              element={
+                user.id ? (
+                  <HomePage /> // Render HomePage for authenticated user.
+                ) : (
+                  <Navigate to="/login" replace /> // Redirect unauthenticated user.
+                )
+              }
+            />
           <Route 
             exact path="/login"
             element={
@@ -56,7 +71,7 @@ function App() {
               user.id ? (
                 <MyTrinkets /> // Render MyTrinkets for authenticated user.
               ) : (
-                <Navigate to="/login" replace /> // Redirect unauthenticated user.
+                <Navigate to="/" replace /> // Redirect unauthenticated user.
               )
             } 
           />
@@ -80,20 +95,11 @@ function App() {
               )
             } 
           />
-          <Route 
-            exact path="/"
-            element={
-              user.id ? (
-                <HomePage /> // Render HomePage for authenticated user.
-              ) : (
-                <Navigate to="/login" replace /> // Redirect unauthenticated user.
-              )
-            }
-          />
+          
           <Route
             path="*"
             element={
-              <h2>404 Page</h2>
+              <ErrorPage/>
             } 
           />
         </Routes>
