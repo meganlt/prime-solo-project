@@ -5,10 +5,7 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
-// If the request came from an authenticated user, this route
-// sends back an object containing that user's information.
-// Otherwise, it sends back an empty object to indicate there
-// is not an active session.
+// This router gets all trinkets from the database:
 router.get('/', (req, res) => {
   const queryString = `SELECT * from "items";`
   pool.query( queryString).then((results)=>{
@@ -19,6 +16,7 @@ router.get('/', (req, res) => {
   })
 });
 
+// This router gets all trinkets owned by the currently logged in user:
 router.get('/:userId', (req, res) => {
   console.log('in GET/userID:', req.params);
   const userId = req.params.userId;

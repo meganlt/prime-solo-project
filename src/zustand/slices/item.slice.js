@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 
 const itemSlice = (set, get) => ({
-  userTrinkets: {},
+  userTrinkets: [],
   fetchUserTrinkets: function(userId) {
     console.log('in fetchUserTrinkets. UserID:', userId);
     axios.get(`/api/items/${userId}`).then( function(response){
@@ -17,6 +17,10 @@ const itemSlice = (set, get) => ({
       console.log(err);
       alert('error getting users trinkets');
     })
+  },
+  allTrinkets: [],
+  fetchAllTrinkets: function() {
+    console.log('in fetchAllTrinkets');
   }
 })
 

@@ -136,3 +136,22 @@ button:hover, button:focus {
   text-decoration-color: #20c997;
   text-decoration-thickness: 2px;
 }
+
+
+/* Trinket Listing */
+.trinket-list {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+
+  li {
+    background-color: rgba(255,255,255, 0.25);
+    width: calc(25% - 20px);
+  }
+
+  .borrowed-true {
+    background-color: rgba( var(--light-cool), .25);
+  }
+}
