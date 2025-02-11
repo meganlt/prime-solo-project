@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useStore from '../../zustand/store';
+import { readAndCompressImage } from 'browser-image-resizer';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -17,16 +18,54 @@ import Select from '@mui/material/Select';
 
 
 function AddTrinket() {
-  
+  // Initial hook and setup for dialog
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+
+  // Selected image file name
+  const [fileName, setFileName] = useState('');
+  // Selected file type
+  const [fileType, setFileType] = useState('');
+  // Selected image file
+  const [selectedFile, setSelectedFile] = useState();
+  // Selected image preview
+  const [imagePreview, setImagePreview] = useState();
+  // Used to display uploaded images on the page
+  const [imageList, setImageList] = useState([]);
+
+  const onFileChange = async (event) => {
+    // Access the selected file
+    const fileToUpload = event.target.files[0];
+
+    // Resize and compress the image. Remove this if using something other
+    // than an image upload.
+    const copyFile = new Blob([fileToUpload], { type: fileToUpload.type, name: fileToUpload.name });
+    const resizedFile = await readAndCompressImage(copyFile, {
+      quality: 1.0,    // 100% quality
+      maxHeight: 1000, // max height of the image
+    });
+
+    // Limit to specific file types.
+    const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+
+    // Check if the file is one of the allowed types.
+    if (acceptedImageTypes.includes(fileToUpload.type)) {
+      // Resizing the image removes the name, store it in a separate variable
+      setFileName(encodeURIComponent(fileToUpload.name));
+      setFileType(encodeURIComponent(fileToUpload.type));
+      // Save the resized file
+      setSelectedFile(resizedFile);
+      // Create a URL that can be used in an img tag for previewing the image
+      setImagePreview(URL.createObjectURL(resizedFile));
+    } else {
+      alert('Please select an image');
+    }
+  }
 
   const [ trinketCategory, setTrinketCategory ] = useState( '' );
   const handleCategoryChange = (event) => {
@@ -137,18 +176,31 @@ function AddTrinket() {
         </FormControl>          
           <h3>Description:</h3>
           <p>It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. Include links to any instruction manuals, product pages, or reviews you've written off-site!</p>
-        <InputLabel>Description</InputLabel>
-        <TextField
-          id="trinketDescInput"
+          <InputLabel>Description</InputLabel>
+          <TextField
+            id="trinketDescInput"
           name="trinketDesc"
           multiline
           minRows={4}
           maxRows={8}
           fullWidth
-        />
-
+          />
           Trinket Image:
-          <Button>Choose Image</Button>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+          />
+          {
+            imagePreview && (
+              <>
+                <br />
+                <br />
+                <p>Preview</p>
+                <img style={{maxHeight: '100px'}} src={imagePreview} />
+              </>
+            )
+          }  
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
