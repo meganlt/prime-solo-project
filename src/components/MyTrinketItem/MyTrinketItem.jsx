@@ -3,7 +3,7 @@ import useStore from '../../zustand/store';
 
 
 function MyTrinketItem( trinket ) {
-  // console.log("Received trinket:", trinket); // Debugging log
+  console.log("Received trinket:", trinket); // Debugging log
 
   if (!trinket) {
     return <p>Loading Trinket...</p>; // Prevents crashing on undefined values
@@ -29,10 +29,10 @@ function MyTrinketItem( trinket ) {
 
   return (
     <li className={ `borrowed-${borrowed}`}>
-      <h3>{trinket.name}</h3>
-        <img src={trinket.image}/>
-        <p>owner: {trinket.owner_user_id}</p>
-        <p>category: {trinket.category}</p>
+      <h3>{trinket.trinket.name}</h3>
+        <img src={`https://borrow-burrow.s3.us-east-1.amazonaws.com/images/${trinket.trinket.image}`} width="100%"/>
+        <p>owner: {trinket.trinket.owner_user_id}</p>
+        <p>category: {trinket.trinket.category}</p>
           { borrowed ? 
             <p>BEING BORROWED by {borrower.username} </p> 
             : 

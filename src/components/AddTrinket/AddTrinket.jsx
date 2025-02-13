@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import useStore from '../../zustand/store';
 import { readAndCompressImage } from 'browser-image-resizer';
 import * as React from 'react';
@@ -18,6 +19,8 @@ import Select from '@mui/material/Select';
 
 
 function AddTrinket() {
+  const user = useStore((state) => state.user);
+
   // Initial hook and setup for dialog
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -27,6 +30,7 @@ function AddTrinket() {
     setOpen(false);
   };
 
+  // Hooks for S3 File Upload
   // Selected image file name
   const [fileName, setFileName] = useState('');
   // Selected file type
@@ -81,15 +85,39 @@ function AddTrinket() {
     console.log('in addTrinket');
 
     const formData = new FormData(e.currentTarget);
+    formData.append('image', selectedFile);
     const formJson = Object.fromEntries(formData.entries());
     const objectToSend = { 
       trinketName: formJson.trinketName,
+      trinketUser: user.id,
       trinketCategory: trinketCategory,
       trinketTerms: trinketTerms,
-      trinketDesc: formJson.trinketDesc
+      trinketDesc: formJson.trinketDesc,
+      trinketImage: fileName,
+      trinketImageType: fileType,
+      file: selectedFile
     };
+    console.log('selected file:', selectedFile);
+    console.log('Form data:', formData);
     console.log(objectToSend);
+
+    axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, objectToSend ).then( function( response ){
+      console.log( response );
+      clearForm();
+
+    }).catch( function(err){
+      console.log(err);
+      alert('error posting to server');
+    })
+
     handleClose();
+  }
+
+  const clearForm = () => {
+    setFileName('');
+    setFileType('');
+    setSelectedFile(undefined);
+    setImagePreview(undefined);
   }
 
   return (
