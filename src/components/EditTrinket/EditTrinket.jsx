@@ -4,6 +4,7 @@ import useStore from '../../zustand/store';
 import { readAndCompressImage } from 'browser-image-resizer';
 import * as React from 'react';
 import Button from '@mui/material/Button';
+import CheckBox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,18 +18,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-
-function AddTrinket() {
+function EditTrinket(trinket) {
   const user = useStore((state) => state.user);
-
+  // console.log(trinket);
+  
   // Initial hook and setup for dialog
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleEditClickOpen = () => {  setOpenEdit(true);};
+  const handleEditClose = () => {  setOpenEdit(false); };
 
   // Hooks for S3 File Upload
   // Selected image file name
@@ -71,37 +68,21 @@ function AddTrinket() {
     }
   }
 
-  const [ trinketCategory, setTrinketCategory ] = useState( '' );
+  const [ trinketCategory, setTrinketCategory ] = useState( trinket.trinket.category );
   const handleCategoryChange = (event) => {  setTrinketCategory(event.target.value);};
-  const [ trinketTerms, setTrinketTerms ] = useState( '' );
+  const [ trinketTerms, setTrinketTerms ] = useState( trinket.trinket.term );
   const handleTermsChange = (event) => {  setTrinketTerms(event.target.value);};
+  const [ trinketStatus, setTrinketStatus ] = useState( trinket.trinket.term );
+  const handleStatusChange = (event) => {  setTrinketStatus(event.target.value);};
 
-  function addTrinket(e){
+  function editTrinket(e){
     e.preventDefault();
-    console.log('in addTrinket');
+    console.log('in editTrinket');
 
     const formData = new FormData(e.currentTarget);
     formData.append('image', selectedFile);
-    formData.forEach((v, k) => console.log(v, k));
 
-
-    const formJson = Object.fromEntries(formData.entries());
-    const objectToSend = { 
-      trinketName: formJson.trinketName,
-      trinketUser: user.id,
-      trinketCategory: trinketCategory,
-      trinketTerms: trinketTerms,
-      trinketDesc: formJson.trinketDesc,
-      trinketImage: fileName,
-      trinketImageType: fileType,
-      file: formJson.image,
-      formData: formData
-    };
-    console.log('selected file:', selectedFile);
-    console.log('Form json:', formJson);
-    console.log(objectToSend);
-
-    axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
+    axios.put(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
       clearForm();
 
@@ -110,7 +91,7 @@ function AddTrinket() {
       alert('error posting to server');
     })
 
-    handleClose();
+    handleEditClose();
   }
 
   const clearForm = () => {
@@ -120,28 +101,45 @@ function AddTrinket() {
     setImagePreview(undefined);
   }
 
+  function deleteTrinket(){
+    console.log('in deleteTrinket', trinket.trinket.id);
+
+    let checkedInputState = document.getElementById('deleteCheck').checked;
+
+    if(checkedInputState){
+      axios.delete(`/api/items?id=${trinket.trinket.id}`).then( function(response){
+        console.log('back from delete:', response.data);
+        // TO DO: refresh trinkets
+      }).catch( function(err){
+        console.log(err);
+        alert('error deleting trinket');
+      });
+    } else {
+      alert('check box first!');
+    }
+
+    
+  }
+
   return (
     <>
       
       <React.Fragment>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          <span className="material-symbols-outlined" onClick={handleClickOpen}>add</span>
-          Add New Trinket
-        </Button>
+        <Button><span className="material-symbols-outlined" onClick={handleEditClickOpen}>edit</span></Button>
         <Dialog
-          open={open}
-          onClose={handleClose}
+          open={openEdit}
+          onClose={handleEditClose}
           slotProps={{
             paper: {
               component: 'form',
-              onSubmit: addTrinket,
+              onSubmit: editTrinket,
             },
           }}
         >
-        <DialogTitle>Add New Trinket</DialogTitle>
+        <DialogTitle>Edit New Trinket</DialogTitle>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={handleEditClose}
           sx={(theme) => ({
             position: 'absolute',
             right: 8,
@@ -152,9 +150,6 @@ function AddTrinket() {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <DialogContentText>
-            Add a new trinket to your den, so you can share it with your forest!
-          </DialogContentText>
           <TextField
             required
             margin="dense"
@@ -163,15 +158,18 @@ function AddTrinket() {
             label="Trinket Name"
             type="text"
             size="small"
+            defaultValue={trinket.trinket.name}
             variant="outlined"
             fullWidth
           />
           <input type="hidden" value={user.id} name="trinketUser" id="trinketUserInput"/>
+          <input type="hidden" value={trinket.trinket.id} name="trinketId" id="trinketIdInput"/>
           <FormControl required sx={{ m: 0, ml: 0, mt:2, pr:2, width: 1/2 }} size="small">
             <InputLabel id="select-category-label">Trinket Type</InputLabel>
             <Select
               labelId="select-category-label"
               id="trinketCategoryInput"
+              defaultValue={trinket.trinket.category}
               value={trinketCategory}
               name="trinketCategory"
               label="Trinket Type"
@@ -191,6 +189,7 @@ function AddTrinket() {
             <Select
               labelId="borrow-select-label"
               id="trinketTermsInput"
+              defaultValue={trinket.trinket.term}
               value={trinketTerms}
               label="Trinket Type"
               name="trinketTerms"
@@ -200,7 +199,22 @@ function AddTrinket() {
               <MenuItem value="long-term">Long-Term Borrow</MenuItem>
               <MenuItem value="giveaway">Giveaway</MenuItem>
             </Select>
-        </FormControl>          
+        </FormControl>
+        <FormControl required sx={{ m: 0, mt: 2, width: 1/2  }} size="small">
+            <InputLabel id="borrow-select-label">Status:</InputLabel>
+            <Select
+              labelId="borrow-select-label"
+              id="trinketStatusInput"
+              defaultValue={trinket.trinket.status}
+              value={trinketStatus}
+              label="Trinket Type"
+              name="trinketStatus"
+              onChange={handleStatusChange}
+            >
+              <MenuItem value="available">available</MenuItem>
+              <MenuItem value="hidden">hidden</MenuItem>
+            </Select>
+        </FormControl>           
           <h3>Description:</h3>
           <p>It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. Include links to any instruction manuals, product pages, or reviews you've written off-site!</p>
           <InputLabel>Description</InputLabel>
@@ -211,27 +225,36 @@ function AddTrinket() {
           minRows={4}
           maxRows={8}
           fullWidth
+          defaultValue={trinket.trinket.description}
           />
           Trinket Image:
+          
           <input
             type="file"
             accept="image/*"
             onChange={onFileChange}
           />
+          Current image: <img src={trinket.imageUrl} width="100px"/>
           {
             imagePreview && (
               <>
                 <br />
                 <br />
-                <p>Preview</p>
+                <p>Preview of New Image:</p>
                 <img style={{maxHeight: '100px'}} src={imagePreview} />
               </>
             )
           }  
+          <DialogContentText>
+            DELETE - are you sure?
+            <input type="checkbox" id="deleteCheck" label="Yes, I'm sure" color="error"/> <label htmlFor="deleteCheck">yes, i'm sure.</label>
+            <Button variant="contained" color="error" onClick={deleteTrinket}>Delete this trinket</Button>
+          </DialogContentText>
         </DialogContent>
+        
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add Trinket</Button>
+          <Button onClick={handleEditClose}>Cancel</Button>
+          <Button type="submit">Edit Trinket</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
@@ -240,4 +263,4 @@ function AddTrinket() {
 }
 
 
-export default AddTrinket;
+export default EditTrinket;

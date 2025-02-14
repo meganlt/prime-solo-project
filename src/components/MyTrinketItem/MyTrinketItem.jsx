@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import useStore from '../../zustand/store';
 import axios from 'axios';
+import EditTrinket from '../EditTrinket/EditTrinket';
 
 function MyTrinketItem( trinket ) {
-  console.log("Received trinket:", trinket); // Debugging log
+  // console.log("Received trinket:", trinket); // Debugging log
 
-    // Used to display uploaded images on the page
-    const [imageList, setImageList] = useState([]);
+  // Used to display uploaded images on the page
+  const [imageList, setImageList] = useState([]);
 
   if (!trinket) {
     return <p>Loading Trinket...</p>; // Prevents crashing on undefined values
@@ -46,16 +47,24 @@ function MyTrinketItem( trinket ) {
   }, []);
 
   return (
-    <li className={ `borrowed-${borrowed}`}>
-      <h3>{trinket.trinket.name}</h3>
-        <img src={`${imageList.imageUrl}`} width="100%"/>
+    <li className={ `borrowed-${borrowed} trinket-${trinket.trinket.category}`}>
+      <div className='trinket-header'>
+        
+        { borrowed ? 
+          <p><img src=""/>At {borrower.username}'s</p> 
+          : 
+          <p>at home<EditTrinket trinket={trinket.trinket} imageUrl={imageList.imageUrl}/></p> 
+        }
+      </div>
+      
+      <img className="trinket-image" src={`${imageList.imageUrl}`} width="100%"/>
+      <div className="trinket-details">
+        <h3>{trinket.trinket.name}</h3>
         <p>owner: {trinket.trinket.owner_user_id}</p>
         <p>category: {trinket.trinket.category}</p>
-          { borrowed ? 
-            <p>BEING BORROWED by {borrower.username} </p> 
-            : 
-            <p>at home<button>Edit</button></p> 
-          } 
+           
+      </div>
+      
     </li>
   );
 }

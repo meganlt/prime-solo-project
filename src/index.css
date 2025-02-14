@@ -1,7 +1,7 @@
 
 /*Imports */
 
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,favorite,home,logout,search,settings');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,edit,favorite,home,logout,search,settings');
 
 /* Box-Sizing Fix: */
   /* https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
@@ -145,11 +145,23 @@ button:hover, button:focus {
   margin: 0;
   padding: 0;
   gap: 20px;
+  flex-wrap: wrap;
 
   li {
     background-color: rgba(255,255,255, 0.25);
     width: calc(25% - 20px);
+    min-width: 200px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
   }
+  
+  .trinket-image {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+  }
+  
+  .trinket-details { padding: 0 20px;}
 
   .borrowed-true {
     background-color: rgba( var(--light-cool), .25);

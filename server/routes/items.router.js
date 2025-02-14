@@ -53,15 +53,13 @@ router.post('/', async (req, res)=>{
 
   try {
     // setup variables for s3
-    // will need to customize this for the image name specifically. req.query.image
-    // const { imageName, imageType } = req.query;
     const imageName = req.query.imageName;
     const imageType = req.query.imageType
     const imageData = req.files.image.data;
 
-    console.log('image name:', imageName);
-    console.log('imageType:', imageType);
-    console.log('image data:', imageData);
+    // console.log('image name:', imageName);
+    // console.log('imageType:', imageType);
+    // console.log('image data:', imageData);
 
     const imageKey = `images/${imageName}`; // folder/file
     const command = new PutObjectCommand({
@@ -72,15 +70,15 @@ router.post('/', async (req, res)=>{
     });
     
     
-    // get response from s3 client
+    // Get response from s3 client
     const response = await s3Client.send(command);
-    console.log('response:', response); // Used for debugging
+    // console.log('response:', response); // Used for debugging
 
-    // assemble query string for non-image items
+    // Assemble query string for non-image items
     const queryString = `INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description, image )
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8 );`;
 
-    // assemble values array
+    // Assemble values array
     const values = [ req.body.trinketName, req.body.trinketUser, req.body.trinketUser,req.body.trinketCategory, req.body.trinketTerms, 'available', req.body.trinketDesc, imageName ]
 
     // pool.query to insert item
@@ -91,15 +89,11 @@ router.post('/', async (req, res)=>{
       console.log(error)
       res.sendStatus(500);
   }
-  
-  // res.send('woof post');
-
-  
-
 });
 
+// GET images for trinket listing
 router.get('/image/:imageName', async (req, res) => {
-  console.log('in GET:/image', req.body, req.query, req.params);
+  // console.log('in GET:/image', req.body, req.query, req.params);
   try {
       const { imageName } = req.params;
       const command = new GetObjectCommand({
@@ -122,10 +116,78 @@ router.get('/image/:imageName', async (req, res) => {
 });
 
 // PUT to Edit Trinket
-router.put('/', (req, res)=>{
+router.put('/', async (req, res)=>{
+  console.log('POST req.files/:', req.files);
   console.log('PUT /:', req.body);
-  res.send('meow put');
-})
+  console.log('POST req.query/:', req.query);
+
+  const id = req.body.trinketId;
+  let queryString = '';
+  let values = [];
+  // TO DO: STRETCH: remove old image from AWS before uploading new
+
+  try {
+    if( req.files !== null) {
+      // setup variables for s3
+      const imageName = req.query.imageName;
+      const imageType = req.query.imageType
+      const imageData = req.files.image.data;
+
+      const imageKey = `images/${imageName}`; // folder/file
+      const command = new PutObjectCommand({
+          Bucket: process.env.AWS_BUCKET,
+          Key: imageKey, // folder/file 
+          Body: imageData, // image data to upload
+          ContentType: imageType, // ensure image type
+      });
+      
+      
+      // Get response from s3 client
+      const response = await s3Client.send(command);
+      // console.log('response:', response); // Used for debugging
+
+      // Assemble query string for non-image items
+      queryString = `UPDATE "items" 
+      SET "name"=$1,
+        "category"=$2,
+        "term"=$3,
+        "status"=$4,
+        "description"=$5,
+        "image"=$6
+      WHERE id=$7;`;
+    
+        // Assemble values array
+        values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, req.body.trinketDesc, imageName, id ];
+    } else {
+      queryString = `UPDATE "items" 
+      SET "name"=$1,
+        "category"=$2,
+        "term"=$3,
+        "status"=$4,
+        "description"=$5
+      WHERE id=$6;`;
+    
+      // Assemble values array
+      values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, req.body.trinketDesc,  id ];
+
+    }
+
+    // pool.query to insert item
+    await pool.query( queryString, values);
+    res.sendStatus(200);
+
+  } catch (error){
+      console.log(error)
+      res.sendStatus(500);
+  }
+});
+
+// DELETE to Delete Trinket
+router.delete('/', (req,res)=>{
+  console.log('DELETE/:', req.query);
+  res.send('meow delete');
+});
+
 
 
 module.exports = router;
