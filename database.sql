@@ -19,6 +19,8 @@ CREATE TABLE "user" (
   "available_status" BOOLEAN
 );
 
+SELECT * from "user";
+
 CREATE TABLE "items" (
   "id" SERIAL PRIMARY KEY,
   "name" VARCHAR(1000) NOT NULL,
@@ -27,38 +29,28 @@ CREATE TABLE "items" (
   "category" VARCHAR(100) NOT NULL,
   "term" VARCHAR(100) NOT NULL,
   "status" VARCHAR(100) NOT NULL,
-  "description" VARCHAR(2000)
+  "description" VARCHAR(2000),
+  "image" VARCHAR(255)
 );
 
-INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description )
+INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description, image )
 VALUES 
-('Heat Gun', 1, 1, 'tool', 'Long Term Borrow', 'available', 'Useful tool for embossing, melting thermoplastic, or curing polymer clay!'),
-('Animal Crossing', 1, 1, 'video-game', 'Short Term Borrow', 'available', 'Such a cozy little game!'),
-('Game of Thrones: Full Series on DVD', 2, 2, 'DVD', 'Giveaway', 'available', 'I never want to watch this again, so anyone can keep it, or burn it if you want.');
+('1984', 1, 3, 'book', 'Long Term Borrow', 'borrowed', 'We already live in a totalitarian state, doesnt anyone read my blog, Britta Unfiltered??', 'https://placecats.com/300/250'),
+('Natalie is Freezing', 1, 1, 'cd', 'Short Term Borrow', 'borrowed', 'This is my favorite cd. Walkmans are cool, because they are retro.', 'https://placecats.com/300/250'),
+('Knitting Needles', 1, 1, 'craft-supply', 'Giveaway', 'available', 'Knitting is hip. Winona Ryder knits.', 'https://placecats.com/300/250');
 
-CREATE TABLE "images" (
-  "id" SERIAL PRIMARY KEY,
-  "name" VARCHAR(1000) NOT NULL,
-  "type" VARCHAR(50) NOT NULL,
-  "item_id" INT,
-  "user_id" INT
-);
 
--- JUNCTION TABLE
-CREATE TABLE "items_images" (
-  "id" SERIAL PRIMARY KEY,
-  "item_id" INT REFERENCES "items"
-  "image_id" INT REFERENCES "images"
-);
+SELECT * from "items" WHERE "owner_user_id"=1;
 
-CREATE TABLE "messages" {
-  "id" SERIAL PRIMARY KEY,
-  "type" VARCHAR(50) NOT NULL,
-  "title" VARCHAR(255) NOT NULL,
-  "body" VARCHAR(2000) NOT NULL,
-  "sent_by" INT REFERENCES "user",
-  "sent_to" INT REFERENCES "user"
-}
+SELECT * 
+FROM "user"
+JOIN "items" ON "user".id = items.owner_user_id;
+
+SELECT items.name, "user".username 
+FROM "user"
+JOIN "items" ON "user".id = items.owner_user_id;
+
+SELECT * from "user";
 
 
 -------------------------------------------------------
