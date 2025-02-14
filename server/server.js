@@ -7,9 +7,14 @@ const app = express();
 // Use process.env.PORT if it exists, otherwise use 5001:
 const PORT = process.env.PORT || 5001;
 
+const fileUpload = require('express-fileupload');
+
 // Require auth-related middleware:
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
+
+// Accept file uploads
+app.use(fileUpload());
 
 // Require router files:
 const userRouter = require('./routes/user.router');

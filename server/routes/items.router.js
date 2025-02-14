@@ -49,12 +49,13 @@ router.get('/:userId', (req, res) => {
 router.post('/', async (req, res)=>{
   console.log('POST req.files/:', req.files);
   console.log('POST req.body/:', req.body);
+  console.log('POST req.query/:', req.query);
 
   try {
     // setup variables for s3
     // will need to customize this for the image name specifically. req.query.image
     // const { imageName, imageType } = req.query;
-    const imageName = req.body.trinketImage;
+    const imageName = req.query.imageName;
     const imageType = req.query.imageType
     const imageData = req.files.image.data;
 
@@ -80,7 +81,7 @@ router.post('/', async (req, res)=>{
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8 );`;
 
     // assemble values array
-    const values = [ req.body.trinketName, req.body.trinketUser, req.body.trinketUser,req.body.trinketCategory, req.body.trinketTerms, 'available', req.body.trinketDesc, req.body.trinketImage ]
+    const values = [ req.body.trinketName, req.body.trinketUser, req.body.trinketUser,req.body.trinketCategory, req.body.trinketTerms, 'available', req.body.trinketDesc, imageName ]
 
     // pool.query to insert item
     await pool.query( queryString, values);

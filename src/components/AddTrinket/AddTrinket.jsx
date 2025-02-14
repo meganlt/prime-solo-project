@@ -86,6 +86,9 @@ function AddTrinket() {
 
     const formData = new FormData(e.currentTarget);
     formData.append('image', selectedFile);
+    formData.forEach((v, k) => console.log(v, k));
+
+
     const formJson = Object.fromEntries(formData.entries());
     const objectToSend = { 
       trinketName: formJson.trinketName,
@@ -95,13 +98,14 @@ function AddTrinket() {
       trinketDesc: formJson.trinketDesc,
       trinketImage: fileName,
       trinketImageType: fileType,
-      file: formJson.image
+      file: formJson.image,
+      formData: formData
     };
     console.log('selected file:', selectedFile);
     console.log('Form json:', formJson);
     console.log(objectToSend);
 
-    axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, objectToSend ).then( function( response ){
+    axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
       clearForm();
 
@@ -138,7 +142,7 @@ function AddTrinket() {
           slotProps={{
             paper: {
               component: 'form',
-              onSubmit: (e) => addTrinket(e),
+              onSubmit: addTrinket,
             },
           }}
         >
@@ -170,12 +174,14 @@ function AddTrinket() {
             variant="outlined"
             fullWidth
           />
+          <input type="hidden" value={user.id} name="trinketUser" id="trinketUserInput"/>
           <FormControl required sx={{ m: 0, ml: 0, mt:2, pr:2, width: 1/2 }} size="small">
             <InputLabel id="select-category-label">Trinket Type</InputLabel>
             <Select
               labelId="select-category-label"
               id="trinketCategoryInput"
               value={trinketCategory}
+              name="trinketCategory"
               label="Trinket Type"
               onChange={handleCategoryChange}
             >
@@ -195,6 +201,7 @@ function AddTrinket() {
               id="trinketTermsInput"
               value={trinketTerms}
               label="Trinket Type"
+              name="trinketTerms"
               onChange={handleTermsChange}
             >
               <MenuItem value="short-term">Short-Term Borrow</MenuItem>
