@@ -9,6 +9,7 @@ const {
   PutObjectCommand,
   S3Client,
 } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 // setup s3 client
 const s3Client = new S3Client({
@@ -46,26 +47,33 @@ router.get('/:userId', (req, res) => {
 
 // POST new trinket
 router.post('/', async (req, res)=>{
-  console.log('POST /:', req.body, req.query, req.files);
+  console.log('POST req.files/:', req.files);
+  console.log('POST req.body/:', req.body);
 
   try {
     // setup variables for s3
     // will need to customize this for the image name specifically. req.query.image
     // const { imageName, imageType } = req.query;
     const imageName = req.body.trinketImage;
-    const imageType = req.body.trinketImageType;
-    const imageData = req.body.file.data;
+    const imageType = req.query.imageType
+    const imageData = req.files.image.data;
+
+    console.log('image name:', imageName);
+    console.log('imageType:', imageType);
+    console.log('image data:', imageData);
+
     const imageKey = `images/${imageName}`; // folder/file
     const command = new PutObjectCommand({
         Bucket: process.env.AWS_BUCKET,
         Key: imageKey, // folder/file 
         Body: imageData, // image data to upload
+        ContentType: imageType, // ensure image type
     });
-
+    
     
     // get response from s3 client
     const response = await s3Client.send(command);
-    console.log(response); // Used for debugging
+    console.log('response:', response); // Used for debugging
 
     // assemble query string for non-image items
     const queryString = `INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description, image )
@@ -76,6 +84,7 @@ router.post('/', async (req, res)=>{
 
     // pool.query to insert item
     await pool.query( queryString, values);
+    res.sendStatus(201);
 
   } catch (error){
       console.log(error)
@@ -86,6 +95,29 @@ router.post('/', async (req, res)=>{
 
   
 
+});
+
+router.get('/image/:imageName', async (req, res) => {
+  console.log('in GET:/image', req.body, req.query, req.params);
+  try {
+      const { imageName } = req.params;
+      const command = new GetObjectCommand({
+          Bucket: process.env.AWS_BUCKET,
+          Key: `images/${imageName}`, // folder/file 
+      });
+      // const data = await s3Client.send(command);
+      // console.log(data);
+      // data.Body.pipe(res);
+
+      const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1-hour expiry
+      res.json({ imageUrl: signedUrl });
+
+      // const url = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/images/${imageName}`; // Pre-signed URL
+      // res.send(url);
+  } catch (error) {
+      console.log(error)
+      res.sendStatus(500);
+  }
 });
 
 // PUT to Edit Trinket

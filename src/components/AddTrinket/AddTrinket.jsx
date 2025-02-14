@@ -95,10 +95,10 @@ function AddTrinket() {
       trinketDesc: formJson.trinketDesc,
       trinketImage: fileName,
       trinketImageType: fileType,
-      file: selectedFile
+      file: formJson.image
     };
     console.log('selected file:', selectedFile);
-    console.log('Form data:', formData);
+    console.log('Form json:', formJson);
     console.log(objectToSend);
 
     axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, objectToSend ).then( function( response ){

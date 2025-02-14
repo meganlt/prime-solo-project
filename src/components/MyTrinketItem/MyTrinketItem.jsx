@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import useStore from '../../zustand/store';
-
+import axios from 'axios';
 
 function MyTrinketItem( trinket ) {
   console.log("Received trinket:", trinket); // Debugging log
+
+    // Used to display uploaded images on the page
+    const [imageList, setImageList] = useState([]);
 
   if (!trinket) {
     return <p>Loading Trinket...</p>; // Prevents crashing on undefined values
@@ -27,10 +30,25 @@ function MyTrinketItem( trinket ) {
     // console.log(trinket.trinket.name, 'is borrowed by', borrower.username );
   }
 
+  const getImages = () => {
+    axios.get(`/api/items/image/${trinket.trinket.image}`).then(response => {
+      console.log('response data:', response.data);
+      setImageList(response.data);
+      console.log('image list:', imageList);
+    }).catch(error => {
+      console.log('error', error);
+      // alert('Something went wrong');
+    });
+  }
+
+  useEffect(() => {
+    getImages();
+  }, []);
+
   return (
     <li className={ `borrowed-${borrowed}`}>
       <h3>{trinket.trinket.name}</h3>
-        <img src={`https://borrow-burrow.s3.us-east-1.amazonaws.com/images/${trinket.trinket.image}`} width="100%"/>
+        <img src={`${imageList.imageUrl}`} width="100%"/>
         <p>owner: {trinket.trinket.owner_user_id}</p>
         <p>category: {trinket.trinket.category}</p>
           { borrowed ? 
