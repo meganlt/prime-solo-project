@@ -40,17 +40,33 @@ VALUES
 ('Knitting Needles', 1, 1, 'craft-supply', 'Giveaway', 'available', 'Knitting is hip. Winona Ryder knits.', 'https://placecats.com/300/250');
 
 
-SELECT * from "items" WHERE "owner_user_id"=1;
+SELECT * from "items" WHERE "owner_user_id"!=1;
 
-SELECT * 
+-- Getting all relevant item and user information for displaying all trinkets
+SELECT items.image, items.name, items.category, items.term, items.description, "user".username, "user".avatar 
 FROM "user"
 JOIN "items" ON "user".id = items.owner_user_id;
 
-SELECT items.name, "user".username 
+-- Getting all relevant item and user information for displaying all currently available trinkets, not owned by user #1
+SELECT items.image, items.name, items.category, items.term, items.description, "user".username, "user".avatar 
 FROM "user"
-JOIN "items" ON "user".id = items.owner_user_id;
+JOIN "items" ON "user".id = items.owner_user_id
+WHERE items.status = 'available' AND items.owner_user_id != 1;
 
 SELECT * from "user";
+
+INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description, image )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8 );
+    
+--Editing a user's trinket
+UPDATE "items" 
+	SET "name"='Updated',
+		"category"='book',
+		"term"='Short Term Borrow',
+		"status"='hidden',
+		"description"='A bit of a longer description updated',
+		"image"='Animal-Crossing-New-Horizons---Nintendo-Switch.jpeg'
+WHERE id=1;
 
 
 -------------------------------------------------------

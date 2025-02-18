@@ -23,14 +23,17 @@ router.get('/', (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const hashedPassword = encryptLib.encryptPassword(req.body.password);
-
+  // Randomize choice for an avatar picture
+  const avatars = ['img/avatar-rabbit.png', 'img/avatar-raccoon.png'];
+  const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+  // Building values for insert:
   const sqlText = `
     INSERT INTO "user"
-      ("username", "password", "role")
+      ("username", "password", "role", "avatar", "available_status")
       VALUES
-      ($1, $2, $3);
+      ($1, $2, $3, $4, $5);
   `;
-  const sqlValues = [username, hashedPassword, 'member'];
+  const sqlValues = [username, hashedPassword, 'member', randomAvatar, 'TRUE'];
 
   pool.query(sqlText, sqlValues)
     .then(() => {
