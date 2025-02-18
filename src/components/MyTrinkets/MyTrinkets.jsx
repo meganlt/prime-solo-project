@@ -25,7 +25,7 @@ function MyTrinkets() {
     };
     fetchData();
     
-  }, [ fetchUserTrinkets, fetchForestMembers, user.id ] );
+  }, [ fetchUserTrinkets, fetchForestMembers, user.id, userTrinkets ] );
 
   
   // console.log('user data:', user.id);

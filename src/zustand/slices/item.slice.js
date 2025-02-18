@@ -34,6 +34,13 @@ const itemSlice = (set, get) => ({
   allTrinkets: [],
   fetchAllTrinkets: function() {
     console.log('in fetchAllTrinkets');
+    axios.get(`/api/items`).then( function(response){
+      console.log( response.data );
+      set( {allTrinkets: response.data })
+    }).catch( function(err){
+      console.log(err);
+      alert('error getting trinket list!');
+    });
   }
 })
 

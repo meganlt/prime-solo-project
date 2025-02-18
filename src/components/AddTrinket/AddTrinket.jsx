@@ -104,6 +104,7 @@ function AddTrinket() {
     axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
       clearForm();
+      // TO DO: fetch trinkets to refresh page contents
 
     }).catch( function(err){
       console.log(err);

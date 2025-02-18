@@ -20,7 +20,8 @@ import Select from '@mui/material/Select';
 
 function EditTrinket(trinket) {
   const user = useStore((state) => state.user);
-  // console.log(trinket);
+  const fetchUserTrinkets = useStore( (state)=>state.fetchUserTrinkets);
+  console.log(trinket);
   
   // Initial hook and setup for dialog
   const [openEdit, setOpenEdit] = useState(false);
@@ -72,7 +73,7 @@ function EditTrinket(trinket) {
   const handleCategoryChange = (event) => {  setTrinketCategory(event.target.value);};
   const [ trinketTerms, setTrinketTerms ] = useState( trinket.trinket.term );
   const handleTermsChange = (event) => {  setTrinketTerms(event.target.value);};
-  const [ trinketStatus, setTrinketStatus ] = useState( trinket.trinket.term );
+  const [ trinketStatus, setTrinketStatus ] = useState( trinket.trinket.status );
   const handleStatusChange = (event) => {  setTrinketStatus(event.target.value);};
 
   function editTrinket(e){
@@ -85,7 +86,9 @@ function EditTrinket(trinket) {
     axios.put(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
       clearForm();
-
+      // TO DO: Adjust to get Images first, since images aren't updating along with the rest of the content.
+      // Currently, images will only be correctly refreshed when the page is refreshed.
+      fetchUserTrinkets(user.id);
     }).catch( function(err){
       console.log(err);
       alert('error posting to server');
