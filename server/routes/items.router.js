@@ -109,22 +109,16 @@ router.post('/', async (req, res)=>{
 
 // GET images for trinket listing
 router.get('/image/:imageName', async (req, res) => {
-  // console.log('in GET:/image', req.body, req.query, req.params);
   try {
       const { imageName } = req.params;
       const command = new GetObjectCommand({
           Bucket: process.env.AWS_BUCKET,
           Key: `images/${imageName}`, // folder/file 
       });
-      // const data = await s3Client.send(command);
-      // console.log(data);
-      // data.Body.pipe(res);
 
       const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1-hour expiry
       res.json({ imageUrl: signedUrl });
 
-      // const url = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/images/${imageName}`; // Pre-signed URL
-      // res.send(url);
   } catch (error) {
       console.log(error)
       res.sendStatus(500);

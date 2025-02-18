@@ -5,7 +5,6 @@ import AddTrinket from '../AddTrinket/AddTrinket';
 
 function MyTrinkets() {
   const user = useStore((state) => state.user);
-  // const fetchUser = useStore((state) => state.fetchUser);
   const fetchUserTrinkets = useStore( (state)=>state.fetchUserTrinkets);
   const userTrinkets = useStore((state) => state.userTrinkets );
   const forestMembers = useStore((state)=>state.forestMembers );
@@ -26,11 +25,6 @@ function MyTrinkets() {
     fetchData();
     
   }, [ fetchUserTrinkets, fetchForestMembers, user.id, userTrinkets ] );
-
-  
-  // console.log('user data:', user.id);
-  // console.log(userTrinkets);
-  // console.log('Forest Members:',forestMembers);
 
   if (isLoading) return <p>Loading Trinkets...</p>;
   if (!forestMembers.length) return <p>no forest members found</p>;

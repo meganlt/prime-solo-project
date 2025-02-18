@@ -128,7 +128,7 @@ function EditTrinket(trinket) {
     <>
       
       <React.Fragment>
-        <Button><span className="material-symbols-outlined" onClick={handleEditClickOpen}>edit</span></Button>
+        <Button variant="contained" onClick={handleEditClickOpen}><span className="material-symbols-outlined">edit</span></Button>
         <Dialog
           open={openEdit}
           onClose={handleEditClose}
