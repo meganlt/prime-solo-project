@@ -9,10 +9,10 @@ axios.defaults.withCredentials = true;
 const communitySlice = (set, get) => ({
   forestMembers: [],
   fetchForestMembers: async function(){
-    console.log('STORE: in fetchForestMembers');
+    // console.log('STORE: in fetchForestMembers');
 
     try {
-      console.log("TRY: Fetching forest members...");
+      // console.log("TRY: Fetching forest members...");
       const response = await axios.get("/api/community");
 
       // Checking if data has changed before updating, to limit renders:

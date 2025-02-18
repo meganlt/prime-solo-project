@@ -22,7 +22,7 @@ const s3Client = new S3Client({
 // GET all trinkets from the database:
 router.get('/', (req, res) => {
   const queryString = `SELECT * from "items";`
-  pool.query( queryString).then((results)=>{
+  pool.query( queryString ).then((results)=>{
     res.send(results.rows);
   }).catch( (err)=>{
     console.log(err);
