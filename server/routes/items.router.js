@@ -30,6 +30,22 @@ router.get('/', (req, res) => {
   })
 });
 
+// GET all available trinkets not owned by current user from the database:
+router.get('/available/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const queryString = `SELECT items.image, items.name, items.category, items.term, items.description, "user".username, "user".avatar 
+  FROM "user"
+  JOIN "items" ON "user".id = items.owner_user_id
+  WHERE items.status = 'available' AND items.owner_user_id != $1;`
+  const values = [userId]
+  pool.query( queryString, values ).then((results)=>{
+    res.send(results.rows);
+  }).catch( (err)=>{
+    console.log(err);
+    res.sendStatus(400);
+  })
+});
+
 // GET all trinkets owned by the currently logged in user:
 router.get('/:userId', (req, res) => {
   console.log('in GET/userID:', req.params);

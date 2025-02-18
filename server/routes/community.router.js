@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Get all users from the community:
 router.get('/', (req, res)=>{
-    const queryString = `SELECT id, username, avatar FROM "user"`;
+    const queryString = `SELECT id, role, username, avatar FROM "user"`;
     pool.query( queryString ).then( (results)=>{
         res.send( results.rows );
     }).catch( (err)=>{

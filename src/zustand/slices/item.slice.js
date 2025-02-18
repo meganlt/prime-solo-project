@@ -41,6 +41,17 @@ const itemSlice = (set, get) => ({
       console.log(err);
       alert('error getting trinket list!');
     });
+  },
+  availableTrinkets: [],
+  fetchAvailableTrinkets: function(userId){
+    console.log('in fetchAllTrinkets');
+    axios.get(`/api/items/available/${userId}`).then( function(response){
+      console.log( response.data );
+      set( {availableTrinkets: response.data })
+    }).catch( function(err){
+      console.log(err);
+      alert('error getting trinket list!');
+    });
   }
 })
 

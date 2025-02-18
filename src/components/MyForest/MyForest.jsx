@@ -5,16 +5,16 @@ import useStore from '../../zustand/store';
 function MyForest() {
   
   const user = useStore((state) => state.user);
-  const fetchAllTrinkets = useStore( (state)=>state.fetchAllTrinkets);
-  const allTrinkets = useStore((state) => state.allTrinkets );
+  const fetchAvailableTrinkets = useStore( (state)=>state.fetchAvailableTrinkets);
+  const availableTrinkets = useStore((state) => state.availableTrinkets );
   const forestMembers = useStore((state)=>state.forestMembers );
   const fetchForestMembers = useStore((state)=>state.fetchForestMembers );
   const [isLoading, setIsLoading] = useState(true); // Track loading state
 
   useEffect( ()=>{
     const fetchData = async ()=>{
-      if (allTrinkets.length === 0) {
-        await fetchAllTrinkets();
+      if (availableTrinkets.length === 0) {
+        await fetchAvailableTrinkets(user.id);
       }
       if (forestMembers.length === 0) {
         await fetchForestMembers();
@@ -23,7 +23,7 @@ function MyForest() {
     };
     fetchData();
     
-  }, [ fetchAllTrinkets, fetchForestMembers, user.id, allTrinkets ] );
+  }, [ fetchAvailableTrinkets, fetchForestMembers, user.id, availableTrinkets ] );
 
   if (isLoading) return <p>Loading Trinkets...</p>;
   if (!forestMembers.length) return <p>no forest members found</p>;
@@ -44,13 +44,13 @@ function MyForest() {
         </thead>
         <tbody>
           {
-            allTrinkets.map( (trinket, index)=>(
+            availableTrinkets.map( (trinket, index)=>(
               <tr key={index}>
                 <td><img src={trinket.image}/></td>
                 <td>{trinket.name}</td>
                 <td>{trinket.category}</td>
                 <td>{trinket.term}</td>
-                <td>{trinket.owner_user_id}</td>
+                <td><img src={trinket.avatar} width="50px"/>{trinket.username}</td>
               </tr>
             ))
           }
@@ -58,6 +58,16 @@ function MyForest() {
         </tbody>
       </table>
       <h2>All Members:</h2>
+      {
+        forestMembers.map( (member, index)=>(
+          <div key={index}>
+            <h6>{member.role}</h6>
+            <img src={member.avatar} width="100px"/>
+            <h4>{member.username}</h4>
+          </div>
+
+        ))
+      }
       {JSON.stringify(forestMembers)}
     </>
   );
