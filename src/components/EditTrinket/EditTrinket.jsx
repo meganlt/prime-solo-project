@@ -37,8 +37,6 @@ function EditTrinket(trinket) {
   const [selectedFile, setSelectedFile] = useState();
   // Selected image preview
   const [imagePreview, setImagePreview] = useState();
-  // Used to display uploaded images on the page
-  const [imageList, setImageList] = useState([]);
 
   const onFileChange = async (event) => {
     // Access the selected file
@@ -110,7 +108,7 @@ function EditTrinket(trinket) {
     if(checkedInputState){
       axios.delete(`/api/items?id=${trinket.trinket.id}`).then( function(response){
         console.log('back from delete:', response.data);
-        // TO DO: refresh trinkets
+        fetchUserTrinkets(user.id);
       }).catch( function(err){
         console.log(err);
         alert('error deleting trinket');
@@ -178,6 +176,7 @@ function EditTrinket(trinket) {
             >
               <MenuItem value="art-supply">Art Supply</MenuItem>
               <MenuItem value="blu-ray">Blu-Ray</MenuItem>
+              <MenuItem value="cd">CD</MenuItem>
               <MenuItem value="craft-supply">Craft Supply</MenuItem>
               <MenuItem value="dvd">DVD</MenuItem>
               <MenuItem value="book">Book</MenuItem>

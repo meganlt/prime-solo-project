@@ -39,8 +39,6 @@ function AddTrinket() {
   const [selectedFile, setSelectedFile] = useState();
   // Selected image preview
   const [imagePreview, setImagePreview] = useState();
-  // Used to display uploaded images on the page
-  // const [imageList, setImageList] = useState([]);
 
   const onFileChange = async (event) => {
     // Access the selected file
@@ -82,29 +80,13 @@ function AddTrinket() {
 
     const formData = new FormData(e.currentTarget);
     formData.append('image', selectedFile);
-    // formData.forEach((v, k) => console.log(v, k));
 
 
     const formJson = Object.fromEntries(formData.entries());
-    // const objectToSend = { 
-    //   trinketName: formJson.trinketName,
-    //   trinketUser: user.id,
-    //   trinketCategory: trinketCategory,
-    //   trinketTerms: trinketTerms,
-    //   trinketDesc: formJson.trinketDesc,
-    //   trinketImage: fileName,
-    //   trinketImageType: fileType,
-    //   file: formJson.image,
-    //   formData: formData
-    // };
-    // console.log('selected file:', selectedFile);
-    // console.log('Form json:', formJson);
-    // console.log(objectToSend);
 
     axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
       clearForm();
-      // TO DO: fetch trinkets to refresh page contents
       fetchUserTrinkets(user.id);
     }).catch( function(err){
       console.log(err);
@@ -180,6 +162,7 @@ function AddTrinket() {
             >
               <MenuItem value="art-supply">Art Supply</MenuItem>
               <MenuItem value="blu-ray">Blu-Ray</MenuItem>
+              <MenuItem value="cd">CD</MenuItem>
               <MenuItem value="craft-supply">Craft Supply</MenuItem>
               <MenuItem value="dvd">DVD</MenuItem>
               <MenuItem value="book">Book</MenuItem>

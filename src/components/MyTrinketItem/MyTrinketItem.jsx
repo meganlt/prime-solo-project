@@ -6,9 +6,6 @@ import EditTrinket from '../EditTrinket/EditTrinket';
 function MyTrinketItem( trinket ) {
   // console.log("Received trinket:", trinket); // Debugging log
 
-  // Used to display uploaded images on the page
-  // const [imageList, setImageList] = useState([]);
-
   if (!trinket) {
     return <p>Loading Trinket...</p>; // Prevents crashing on undefined values
   }
@@ -23,8 +20,7 @@ function MyTrinketItem( trinket ) {
     return borrowerInfo;
   }
 
-  // Checking to see if the trinket is currently being borrowed, and if so, 
-  // Updating borrower info to pull in
+  // Checking to see if the trinket is currently being borrowed, and if so, updating borrower info to pull in
   if( trinket.trinket.owner_user_id !== trinket.trinket.holder_user_id){
     borrowed = true;
     borrower = getBorrowerInfo(trinket.trinket.holder_user_id);
