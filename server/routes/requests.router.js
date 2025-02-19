@@ -7,7 +7,9 @@ const router = express.Router();
 // Get all requests for current user:
 router.get('/:userId', (req, res)=>{
     const userId = req.params.userId;
-    const queryString = `SELECT * from "requests" WHERE sent_to = $1 AND responded = 'FALSE';`;
+    const queryString = `SELECT * FROM "requests"
+JOIN "items" ON "requests".message_item = items.id
+WHERE sent_to = $1 AND responded = 'FALSE';`;
     const values = [userId];
     pool.query( queryString, values ).then( (results)=>{
         res.send( results.rows );
