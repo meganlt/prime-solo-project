@@ -86,8 +86,6 @@ function EditTrinket(trinket) {
     axios.put(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
       clearForm();
-      // TO DO: Adjust to get Images first, since images aren't updating along with the rest of the content.
-      // Currently, images will only be correctly refreshed when the page is refreshed.
       fetchUserTrinkets(user.id);
     }).catch( function(err){
       console.log(err);
@@ -237,7 +235,7 @@ function EditTrinket(trinket) {
             accept="image/*"
             onChange={onFileChange}
           />
-          Current image: <img src={trinket.imageUrl} width="100px"/>
+          Current image: <img src={trinket.trinket.image} width="100px"/>
           {
             imagePreview && (
               <>

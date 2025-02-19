@@ -7,7 +7,7 @@ function MyTrinketItem( trinket ) {
   // console.log("Received trinket:", trinket); // Debugging log
 
   // Used to display uploaded images on the page
-  const [imageList, setImageList] = useState([]);
+  // const [imageList, setImageList] = useState([]);
 
   if (!trinket) {
     return <p>Loading Trinket...</p>; // Prevents crashing on undefined values
@@ -31,22 +31,6 @@ function MyTrinketItem( trinket ) {
     // console.log(trinket.trinket.name, 'is borrowed by', borrower.username );
   }
 
-  // Getting signedUrl from S3 for the trinket's image
-  const getImages = () => {
-    axios.get(`/api/items/image/${trinket.trinket.image}`).then(response => {
-      console.log('response data:', response.data);
-      setImageList(response.data);
-      console.log('image list:', imageList);
-    }).catch(error => {
-      console.log('error', error);
-      // alert('Something went wrong');
-    });
-  }
-
-  useEffect(() => {
-    getImages();
-  }, []);
-
   return (
     <li className={ `borrowed-${borrowed} trinket-${trinket.trinket.category}`}>
       <div className='trinket-header'>
@@ -54,7 +38,7 @@ function MyTrinketItem( trinket ) {
         { borrowed ? 
           <p><img src=""/>At {borrower.username}'s</p> 
           : 
-          <p>at home<EditTrinket trinket={trinket.trinket} imageUrl={imageList.imageUrl}/></p> 
+          <p>at home<EditTrinket trinket={trinket.trinket}/></p> 
         }
       </div>
       

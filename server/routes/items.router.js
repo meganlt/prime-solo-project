@@ -109,22 +109,22 @@ router.post('/', async (req, res)=>{
 });
 
 // GET images for trinket listing
-router.get('/image/:imageName', async (req, res) => {
-  try {
-      const { imageName } = req.params;
-      const command = new GetObjectCommand({
-          Bucket: process.env.AWS_BUCKET,
-          Key: `images/${imageName}`, // folder/file 
-      });
+// router.get('/image/:imageName', async (req, res) => {
+//   try {
+//       const { imageName } = req.params;
+//       const command = new GetObjectCommand({
+//           Bucket: process.env.AWS_BUCKET,
+//           Key: `images/${imageName}`, // folder/file 
+//       });
 
-      const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1-hour expiry
-      res.json({ imageUrl: signedUrl });
+//       const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1-hour expiry
+//       res.json({ imageUrl: signedUrl });
 
-  } catch (error) {
-      console.log(error)
-      res.sendStatus(500);
-  }
-});
+//   } catch (error) {
+//       console.log(error)
+//       res.sendStatus(500);
+//   }
+// });
 
 // PUT to Edit Trinket
 router.put('/', async (req, res)=>{

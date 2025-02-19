@@ -20,7 +20,7 @@ import Select from '@mui/material/Select';
 
 function AddTrinket() {
   const user = useStore((state) => state.user);
-
+  const fetchUserTrinkets = useStore( (state)=>state.fetchUserTrinkets);
   // Initial hook and setup for dialog
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -40,7 +40,7 @@ function AddTrinket() {
   // Selected image preview
   const [imagePreview, setImagePreview] = useState();
   // Used to display uploaded images on the page
-  const [imageList, setImageList] = useState([]);
+  // const [imageList, setImageList] = useState([]);
 
   const onFileChange = async (event) => {
     // Access the selected file
@@ -82,30 +82,30 @@ function AddTrinket() {
 
     const formData = new FormData(e.currentTarget);
     formData.append('image', selectedFile);
-    formData.forEach((v, k) => console.log(v, k));
+    // formData.forEach((v, k) => console.log(v, k));
 
 
     const formJson = Object.fromEntries(formData.entries());
-    const objectToSend = { 
-      trinketName: formJson.trinketName,
-      trinketUser: user.id,
-      trinketCategory: trinketCategory,
-      trinketTerms: trinketTerms,
-      trinketDesc: formJson.trinketDesc,
-      trinketImage: fileName,
-      trinketImageType: fileType,
-      file: formJson.image,
-      formData: formData
-    };
-    console.log('selected file:', selectedFile);
-    console.log('Form json:', formJson);
-    console.log(objectToSend);
+    // const objectToSend = { 
+    //   trinketName: formJson.trinketName,
+    //   trinketUser: user.id,
+    //   trinketCategory: trinketCategory,
+    //   trinketTerms: trinketTerms,
+    //   trinketDesc: formJson.trinketDesc,
+    //   trinketImage: fileName,
+    //   trinketImageType: fileType,
+    //   file: formJson.image,
+    //   formData: formData
+    // };
+    // console.log('selected file:', selectedFile);
+    // console.log('Form json:', formJson);
+    // console.log(objectToSend);
 
     axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
       clearForm();
       // TO DO: fetch trinkets to refresh page contents
-
+      fetchUserTrinkets(user.id);
     }).catch( function(err){
       console.log(err);
       alert('error posting to server');
