@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
 // GET all available trinkets not owned by current user from the database:
 router.get('/available/:userId', (req, res) => {
   const userId = req.params.userId;
-  const queryString = `SELECT items.image, items.name, items.category, items.term, items.description, "user".username, "user".avatar 
+  const queryString = `SELECT items.id, items.image, items.name, items.category, items.term, items.description, items.owner_user_id, "user".username, "user".avatar 
   FROM "user"
   JOIN "items" ON "user".id = items.owner_user_id
   WHERE items.status = 'available' AND items.owner_user_id != $1;`
@@ -178,7 +178,13 @@ router.put('/', async (req, res)=>{
 // DELETE to Delete Trinket
 router.delete('/', (req,res)=>{
   console.log('DELETE/:', req.query);
-  res.send('meow delete');
+  const queryString = `DELETE FROM "items" WHERE id=$1;`;
+  const id = req.query.id;
+  pool.query( queryString, [id]).then( (results)=>{
+    res.sendStatus(200);
+}).catch( (err)=>{
+    res.sendStatus(500);
+})
 });
 
 

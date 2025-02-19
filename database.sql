@@ -43,7 +43,7 @@ VALUES
 SELECT * from "items" WHERE "owner_user_id"!=1;
 
 -- Getting all relevant item and user information for displaying all trinkets
-SELECT items.image, items.name, items.category, items.term, items.description, "user".username, "user".avatar 
+SELECT items.id, items.image, items.name, items.category, items.term, items.description, "user".username, "user".avatar 
 FROM "user"
 JOIN "items" ON "user".id = items.owner_user_id;
 
@@ -68,6 +68,18 @@ UPDATE "items"
 		"image"='Animal-Crossing-New-Horizons---Nintendo-Switch.jpeg'
 WHERE id=1;
 
+-- Deleting a trinket
+DELETE FROM "items" WHERE id=1;
+
+CREATE TABLE "requests" (
+  "id" SERIAL PRIMARY KEY,
+  "type" VARCHAR(50) NOT NULL,
+  "details" VARCHAR(2000) NOT NULL,
+  "sent_by" INT REFERENCES "user",
+  "sent_to" INT REFERENCES "user",
+  "message_item" INT REFERENCES "items"
+  "responded" BOOLEAN
+);
 
 -------------------------------------------------------
 --------------------------------------------------

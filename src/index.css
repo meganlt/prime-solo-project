@@ -167,3 +167,59 @@ button:hover, button:focus {
     background-color: rgba( var(--light-cool), .25);
   }
 }
+
+/* My Forest */
+.myforest {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  column-gap: 20px;
+
+  .available-trinkets {
+    background-color: rgba(var(--dark-forest-primary), 0.25);
+    padding: 20px;
+  }
+  aside {
+    width: 100%;
+    text-align: center;
+  }
+}
+.forest-trinket-table {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+
+  tr:hover {
+    td {
+      background-color: rgba(var(--med-cool-primary), 0.25);
+    }
+  }
+  th {
+    background-color: rgba(255,255,255, 0.25);
+    padding: 10px;
+  }
+  td{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+    padding: 10px;
+  }
+  .owner > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  img {
+    max-height: 100px;
+    margin-right: 10px;
+  }
+}
+
+.trinket-details {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 20px;
+}
+
+.image-container {
+
+  img {
+    width: 100%;
+  }
+}

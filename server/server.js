@@ -20,6 +20,7 @@ app.use(fileUpload());
 const userRouter = require('./routes/user.router');
 const itemRouter = require('./routes/items.router');
 const communityRouter = require('./routes/community.router');
+const requestsRouter = require('./routes/requests.router');
 
 // Apply middleware:
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/items', itemRouter);
 app.use('/api/community', communityRouter);
+app.use('/api/requests', requestsRouter);
 
 // Start the server:
 app.listen(PORT, () => {
