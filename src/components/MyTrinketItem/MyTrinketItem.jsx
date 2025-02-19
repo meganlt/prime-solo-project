@@ -31,6 +31,7 @@ function MyTrinketItem( trinket ) {
     // console.log(trinket.trinket.name, 'is borrowed by', borrower.username );
   }
 
+  // Getting signedUrl from S3 for the trinket's image
   const getImages = () => {
     axios.get(`/api/items/image/${trinket.trinket.image}`).then(response => {
       console.log('response data:', response.data);
