@@ -88,14 +88,15 @@ router.post('/', async (req, res)=>{
     
     // Get response from s3 client
     const response = await s3Client.send(command);
-    // console.log('response:', response); // Used for debugging
+    console.log('response:', response); // Used for debugging
+    const imageURL = 'https://borrow-burrow-public.s3.us-east-1.amazonaws.com/images/'+imageName;
 
     // Assemble query string for non-image items
     const queryString = `INSERT INTO "items" ( name, owner_user_id, holder_user_id, category, term, status, description, image )
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8 );`;
 
     // Assemble values array
-    const values = [ req.body.trinketName, req.body.trinketUser, req.body.trinketUser,req.body.trinketCategory, req.body.trinketTerms, 'available', req.body.trinketDesc, imageName ]
+    const values = [ req.body.trinketName, req.body.trinketUser, req.body.trinketUser,req.body.trinketCategory, req.body.trinketTerms, 'available', req.body.trinketDesc, imageURL ]
 
     // pool.query to insert item
     await pool.query( queryString, values);
@@ -155,7 +156,7 @@ router.put('/', async (req, res)=>{
       // Get response from s3 client
       const response = await s3Client.send(command);
       // console.log('response:', response); // Used for debugging
-
+      const imageURL = 'https://borrow-burrow-public.s3.us-east-1.amazonaws.com/images/'+imageName;
       // Assemble query string for non-image items
       queryString = `UPDATE "items" 
       SET "name"=$1,
@@ -167,7 +168,7 @@ router.put('/', async (req, res)=>{
       WHERE id=$7;`;
     
         // Assemble values array
-        values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, req.body.trinketDesc, imageName, id ];
+        values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, req.body.trinketDesc, imageURL, id ];
     } else {
       queryString = `UPDATE "items" 
       SET "name"=$1,

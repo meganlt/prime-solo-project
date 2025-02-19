@@ -58,7 +58,7 @@ function MyTrinketItem( trinket ) {
         }
       </div>
       
-      <img className="trinket-image" src={`${imageList.imageUrl}`} width="100%"/>
+      <img className="trinket-image" src={trinket.trinket.image} width="100%"/>
       <div className="trinket-details">
         <h3>{trinket.trinket.name}</h3>
         <p>owner: {trinket.trinket.owner_user_id}</p>
