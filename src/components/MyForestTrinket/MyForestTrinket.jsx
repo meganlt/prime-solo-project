@@ -39,6 +39,7 @@ function MyForestTrinket(trinket) {
 
     axios.post('/api/requests', objectToSend).then( function(response){
       console.log('back from POST:', response.data);
+      handleClose();
     }).catch( function(err){
       console.log(err);
       alert('error sending request!');
@@ -79,7 +80,7 @@ function MyForestTrinket(trinket) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <div className='trinket-details'>
+          <div className='trinket-detail-modal'>
             <div className='image-container'>
               <img src={trinket.trinket.image}/>
               <p>{trinket.trinket.category}</p>

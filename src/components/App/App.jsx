@@ -8,7 +8,7 @@ import {
 import useStore from '../../zustand/store';
 
 import Header from '../Header/Header';
-import HomePage from '../HomePage/HomePage';
+import MyDen from '../MyDen/MyDen';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import MyTrinkets from '../MyTrinkets/MyTrinkets';
@@ -18,7 +18,7 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 
 function App() {
   const user = useStore((state) => state.user);
-  const isLoading = useStore((state)=>state.isUserLoading)
+  const isLoading = useStore((state)=>state.isUserLoading);
   const fetchUser = useStore((state) => state.fetchUser);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function App() {
               exact path="/"
               element={
                 user.id ? (
-                  <HomePage /> // Render HomePage for authenticated user.
+                  <MyDen /> // Render HomePage for authenticated user.
                 ) : (
                   <Navigate to="/login" replace /> // Redirect unauthenticated user.
                 )

@@ -211,7 +211,7 @@ button:hover, button:focus {
   }
 }
 
-.trinket-details {
+.trinket-detail-modal {
   display: grid;
   grid-template-columns: 1fr 2fr;
   column-gap: 20px;
@@ -222,4 +222,49 @@ button:hover, button:focus {
   img {
     width: 100%;
   }
+}
+
+/* MY DEN */
+.request-card {
+  display: flex;
+  width: 100%;
+  background:rgba( var(--light-cool), .25);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  gap: 20px;
+
+  > * {
+    flex-grow: 1;
+  }
+
+  input, label {
+    display: inline-block;
+  }
+
+  .request-avatar {
+    width: 100px;
+  }
+  
+  .request-details {
+    font-style: italic;
+  }
+
+  .requester-info {
+    text-align: center;
+  }
+
+  .trinket-image {
+    max-height: 150px;
+    float: left;
+    margin-right: 20px;
+  }
+
+  .trinket-info {
+
+    h1 {
+      flex-grow: 2;
+    }
+  }
+
 }

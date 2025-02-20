@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <header>
-            <h1>Prime Solo Project</h1>
+            <h1>BorrowBurrow</h1>
             <Nav />
     </header>
   );

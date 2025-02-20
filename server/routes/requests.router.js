@@ -36,7 +36,8 @@ router.post('/', (req, res)=>{
 
 // ACCEPT borrow request
 router.put('/', (req, res)=>{
-
+    console.log('PUT:/', req.body);
+    res.send('woof');
 });
 
 module.exports = router;

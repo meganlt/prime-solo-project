@@ -1,9 +1,9 @@
 import useStore from '../../zustand/store'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import RequestDetail from '../RequestDetail/RequestDetail';
 
-
-function HomePage() {
+function MyDen() {
   const user = useStore((state) => state.user);
   const forestMembers = useStore((state)=>state.forestMembers );
   const fetchForestMembers = useStore((state)=>state.fetchForestMembers );
@@ -31,16 +31,17 @@ function HomePage() {
   return (
     <>
       <h1>My Den</h1>
-      <p>Your username is: {user.username}</p>
-      <p>Your ID is: {user.id}</p>
-      <h2>requests:</h2>
+      <ul>
+        <li>2 Requests</li>
+        <li>2 Lending</li>
+        <li>2 Borrowing</li>
+      </ul>
+      <h2>Requests:</h2>
       {
       requestList.map( (request, index)=>(
         // TODO: Turn into a component so this isn't as complicated.
-        <div key={index}>
-          <img src={forestMembers.find( forestMember => forestMember.id === request.sent_by).avatar}/>
-          <p>request from: {forestMembers.find( forestMember => forestMember.id === request.sent_by).username}</p>
-        </div>
+        <RequestDetail key={index} request={request} forestMembers={forestMembers}/>
+        
       ))
       }
       {JSON.stringify(requestList)}
@@ -50,4 +51,4 @@ function HomePage() {
 }
 
 
-export default HomePage;
+export default MyDen;
