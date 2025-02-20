@@ -9,13 +9,11 @@ function RequestDetail(request) {
   const [ requestResponse, setRequestResponse ] = useState( '' );
   const handleRequestResponseChange = (event) => {  setRequestResponse(event.target.value);};
 
-  function sendRequestResponse(e){
-    e.preventDefault();
-    console.log('in sendRequest');
-
+  function updateRequest(){
+    console.log('in updateRequest');
     const objectToSend = {
       itemId: request.request.message_item,
-      requestId: request.request.id,
+      requestId: request.request.request_id,
       requestedBy: request.request.sent_by,
       itemOwner: request.request.owner_user_id,
       requestResponse: requestResponse
@@ -27,6 +25,34 @@ function RequestDetail(request) {
       console.log(err);
       alert('error setting request');
     });
+  }
+
+  function createYesRequestResponse(){
+    console.log('in createYesRequestResponse');
+    const objectToSend = {
+      requestType: 'request-response',
+      requestDetails: requestResponse,
+      requestedBy: request.request.sent_to,
+      requestedTo: request.request.sent_by,
+      itemRequested: request.request.message_item
+    }
+    console.log('in sendRequest:', objectToSend);
+
+    axios.post('/api/requests', objectToSend).then( function(response){
+      console.log('back from POST:', response.data);
+    }).catch( function(err){
+      console.log(err);
+      alert('error sending request!');
+    })
+  }
+
+  function sendRequestResponse(e){
+    e.preventDefault();
+    console.log('in sendRequest');
+
+    updateRequest();
+    createYesRequestResponse();
+
   }
 
   return (

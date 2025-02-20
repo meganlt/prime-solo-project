@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all requests for current user:
 router.get('/:userId', (req, res)=>{
     const userId = req.params.userId;
-    const queryString = `SELECT * FROM "requests"
+    const queryString = `SELECT * , requests.id AS "request_id" FROM "requests"
 JOIN "items" ON "requests".message_item = items.id
 WHERE sent_to = $1 AND responded = 'FALSE';`;
     const values = [userId];
@@ -37,7 +37,39 @@ router.post('/', (req, res)=>{
 // ACCEPT borrow request
 router.put('/', (req, res)=>{
     console.log('PUT:/', req.body);
-    res.send('woof');
+
+    let newHolder = '';
+    let newStatus = '';
+  
+    // Check if user responded yes first 
+    if(req.body.requestResponse === "Yes"){
+        // set holder to new person
+        newHolder = req.body.requestedBy;
+        newStatus = 'borrowed'
+    }
+    else if (req.body.requestResponse === "No"){
+        // set holder to the same person (owner)
+        newHolder = req.body.itemOwner;
+        newStatus = 'available'
+    }
+    else {
+        console.log('not reading response correctly');
+    }
+
+    const queryString = `
+        UPDATE "items"
+            SET items.status=$1,
+                items.holder_user_id=$2,
+                requests.responded='TRUE'
+        WHERE id = $3;
+
+        UPDATE "requests"
+            SET requests.responded='TRUE'
+        WHERE id = $4`;
+    const values = [ newStatus, newHolder, req.body.itemId, req.body.requestId ];
+    console.log(values);
+
+
 });
 
 module.exports = router;
