@@ -74,6 +74,15 @@ function EditTrinket(trinket) {
   const [ trinketStatus, setTrinketStatus ] = useState( trinket.trinket.status );
   const handleStatusChange = (event) => {  setTrinketStatus(event.target.value);};
 
+  const handleTrinketReturn = (event) => {
+    // console.log('initial value:', trinketHolder);
+
+    let checkedInputState = document.getElementById('returnHomeInput').checked;
+
+
+    // setTrinketReturn(event.target.value);
+  };
+
   function editTrinket(e){
     e.preventDefault();
     console.log('in editTrinket');
@@ -163,6 +172,8 @@ function EditTrinket(trinket) {
           />
           <input type="hidden" value={user.id} name="trinketUser" id="trinketUserInput"/>
           <input type="hidden" value={trinket.trinket.id} name="trinketId" id="trinketIdInput"/>
+          <input type="hidden" value={trinket.trinket.holder_user_id} name="trinketHolderId" id="trinketHolderIdInput"/>
+          <input type="checkbox" id="returnHomeInput"color="error" onChange={handleTrinketReturn}/> <label htmlFor="returnHomeInput">This item was just returned!</label><br/>  
           <FormControl required sx={{ m: 0, ml: 0, mt:2, pr:2, width: 1/2 }} size="small">
             <InputLabel id="select-category-label">Trinket Type</InputLabel>
             <Select
@@ -214,7 +225,8 @@ function EditTrinket(trinket) {
               <MenuItem value="available">available</MenuItem>
               <MenuItem value="hidden">hidden</MenuItem>
             </Select>
-        </FormControl>           
+        </FormControl>
+                
           <h3>Description:</h3>
           <p>It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. Include links to any instruction manuals, product pages, or reviews you've written off-site!</p>
           <InputLabel>Description</InputLabel>

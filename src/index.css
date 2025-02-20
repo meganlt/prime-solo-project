@@ -38,6 +38,9 @@ body {
   color: rgba(255, 255, 255, 0.75);
 }
 
+h1 { font-size: 2.75em;}
+h2 { font-size: 2em}
+
 /* Basic Header/Main/Footer Flexbox Layout: */
 #root {
   display: flex;
@@ -225,6 +228,17 @@ button:hover, button:focus {
 }
 
 /* MY DEN */
+.den-summary{
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+  li {
+    text-align: center;
+  }
+  .den-summary-number {
+    font-size: 60px;
+  }
+}
 .request-card {
   display: flex;
   width: 100%;

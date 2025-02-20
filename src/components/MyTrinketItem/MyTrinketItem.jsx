@@ -5,6 +5,7 @@ import EditTrinket from '../EditTrinket/EditTrinket';
 
 function MyTrinketItem( trinket ) {
   // console.log("Received trinket:", trinket); // Debugging log
+  const user = useStore((state) => state.user);
 
   if (!trinket) {
     return <p>Loading Trinket...</p>; // Prevents crashing on undefined values
@@ -31,12 +32,19 @@ function MyTrinketItem( trinket ) {
     <li className={ `borrowed-${borrowed} trinket-${trinket.trinket.category}`}>
       <div className='trinket-header'>
         
-        { borrowed ? 
-          <p><img src=""/>At {borrower.username}'s</p> 
+        { borrowed && borrower.id !== user.id ? 
+          <p><img src={borrower.avatar} width="50px"/>In {borrower.username}'s Den</p> 
           : 
-          <p>at home<EditTrinket trinket={trinket.trinket}/></p> 
+          <p>In My Den</p> 
         }
       </div>
+      { 
+        trinket.trinket.owner_user_id === user.id ? (
+          <EditTrinket trinket={trinket.trinket}/>
+        ) : (
+          <></>
+        )
+      }
       
       <img className="trinket-image" src={trinket.trinket.image} width="100%"/>
       <div className="trinket-details">

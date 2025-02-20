@@ -117,6 +117,14 @@ router.put('/', async (req, res)=>{
   const id = req.body.trinketId;
   let queryString = '';
   let values = [];
+  let checkedHolder = '';
+
+  if( req.body.trinketStatus == 'available' && req.body.trinketUser !== req.body.trinketHolderId){
+    checkedHolder = req.body.trinketUser;
+  }
+  else {
+    checkedHolder = req.body.trinketHolderId;
+  }
   // TO DO: STRETCH: remove old image from AWS before uploading new
 
   try {
@@ -145,23 +153,25 @@ router.put('/', async (req, res)=>{
         "category"=$2,
         "term"=$3,
         "status"=$4,
-        "description"=$5,
-        "image"=$6
-      WHERE id=$7;`;
+        "holder_user_id"=$5,
+        "description"=$6,
+        "image"=$7
+      WHERE id=$8;`;
     
         // Assemble values array
-        values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, req.body.trinketDesc, imageURL, id ];
+        values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, checkedHolder, req.body.trinketDesc, imageURL, id ];
     } else {
       queryString = `UPDATE "items" 
       SET "name"=$1,
         "category"=$2,
         "term"=$3,
         "status"=$4,
-        "description"=$5
-      WHERE id=$6;`;
+        "holder_user_id"=$5,
+        "description"=$6
+      WHERE id=$7;`;
     
       // Assemble values array
-      values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, req.body.trinketDesc,  id ];
+      values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, checkedHolder, req.body.trinketDesc,  id ];
 
     }
 

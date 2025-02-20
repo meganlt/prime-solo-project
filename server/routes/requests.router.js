@@ -57,19 +57,37 @@ router.put('/', (req, res)=>{
     }
 
     const queryString = `
-        UPDATE "items"
-            SET items.status=$1,
-                items.holder_user_id=$2,
-                requests.responded='TRUE'
-        WHERE id = $3;
+    WITH
+       A AS (UPDATE "items"
+            SET status=$1,
+                holder_user_id=$2
+        WHERE id = $3)
 
         UPDATE "requests"
-            SET requests.responded='TRUE'
-        WHERE id = $4`;
+            SET responded='TRUE'
+        WHERE id = $4;`;
     const values = [ newStatus, newHolder, req.body.itemId, req.body.requestId ];
     console.log(values);
+    pool.query( queryString, values ).then( (results)=>{
+        res.send( results.rows );
+    }).catch( (err)=>{
+        console.log(err);
+        res.sendStatus(400);
+    })
 
+});
 
+// End Request and Hide
+router.put('/end', (req, res)=>{
+    console.log('in /requestEnd PUT/:', req.body);
+    const queryString = `UPDATE "requests" SET responded='TRUE' WHERE id=$1;`;
+    const values = [ req.body.requestId];
+    pool.query( queryString, values ).then( (results)=>{
+        res.send( results.rows );
+    }).catch( (err)=>{
+        console.log(err);
+        res.sendStatus(400);
+    })
 });
 
 module.exports = router;

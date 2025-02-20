@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 
 function RequestDetail(request) {
   console.log('request:', request);
+  const user = useStore((state) => state.user);
   const requester = request.forestMembers.find( forestMember => forestMember.id === request.request.sent_by);
   const [ requestResponse, setRequestResponse ] = useState( '' );
   const handleRequestResponseChange = (event) => {  setRequestResponse(event.target.value);};
@@ -52,21 +53,42 @@ function RequestDetail(request) {
 
     updateRequest();
     createYesRequestResponse();
+    request.fetchUserRequests(user.id)
 
+  }
+
+  function endRequest(){
+    console.log('in endRequest');
+    const objectToSend = {
+      requestId: request.request.request_id,
+    }
+    axios.put('/api/requests/end', objectToSend).then( function(response){
+      console.log('back from Put:/', response.data);
+      request.fetchUserRequests(user.id)
+    }).catch( function(err){
+      console.log(err);
+      alert('error setting request');
+    });
   }
 
   return (
     <>
-      <div className='request-card'>
+      <div className={`request-card request-${request.request.type}`}>
         <div className='requester-info'>
           <h2>From:</h2>
           <img src={requester.avatar} className='request-avatar' />
           <h3>{requester.username}</h3>
         </div>
         <div className='trinket-info'>
+        {request.request.type === 'borrow-request'? (
           <h2>Can I borrow this?</h2>
+        ) : (
+          <h2>Responded back: {request.request.details}</h2>
+        )}
+          
           <img src={request.request.image} className='trinket-image'/>
           <div>
+            
             <h3>{request.request.name}</h3>
             <p>{request.request.type}</p>
             <p className='request-details'>{request.request.details}</p>
@@ -74,14 +96,27 @@ function RequestDetail(request) {
         </div>
         
         <div>
-          <h2>Respond:</h2>
-          <form onSubmit={sendRequestResponse}>
-            <input type="radio" id="responseInputYes" name="responseInput" value="Yes" required onChange={handleRequestResponseChange}/>
-            <label htmlFor="responseInputYes">Yes, call me to arrange pickup!</label><br/>
-            <input type="radio" id="responseInputNo" name="responseInput" value="No" required onChange={handleRequestResponseChange}/>
-            <label htmlFor="responseInputNo">Sorry, not now!</label><br/>
-            <Button variant="contained" type="submit">respond</Button>
-          </form>
+        {request.request.type === 'borrow-request'? (
+          <>
+            <h2>Respond:</h2>
+            <form onSubmit={sendRequestResponse}>
+              <input type="radio" id="responseInputYes" name="responseInput" value="Yes" required onChange={handleRequestResponseChange}/>
+              <label htmlFor="responseInputYes">Yes, call me to arrange pickup!</label><br/>
+              <input type="radio" id="responseInputNo" name="responseInput" value="No" required onChange={handleRequestResponseChange}/>
+              <label htmlFor="responseInputNo">Sorry, not now!</label><br/>
+              <Button variant="contained" type="submit">respond</Button>
+            </form>
+          </>
+        ) : (
+          <Button variant='contained' onClick={endRequest}>
+            {request.request.details === 'Yes' ? (
+              <span>Ok, I'll contact them</span>
+            ) : (
+              <span>Ok, thanks anyway!</span>
+            )}
+          </Button>
+        )}
+          
         </div>
           
           
