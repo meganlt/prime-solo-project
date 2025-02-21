@@ -513,10 +513,12 @@ button {
   .available-trinkets {
     padding: 20px;
   }
-  aside {
+  .member-list-vertical {
     background-color: rgba(var(--dark-forest-primary), 0.25);
     width: 100%;
     text-align: center;
+    padding: 10px;
+    h4 { margin: 0 0 30px}
   }
 }
 .forest-trinket-table {

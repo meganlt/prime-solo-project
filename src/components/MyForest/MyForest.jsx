@@ -54,12 +54,12 @@ function MyForest() {
             </tbody>
           </table>
         </div>
-        <aside className='member-list'>
-          <h2>All Members:</h2>
+        <aside className='member-list-vertical'>
+          <h3>All Forest Members:</h3>
           {
             forestMembers.map( (member, index)=>(
               <div key={index}>
-                <h6>{member.role}</h6>
+                {/* <h6>{member.role}</h6> */}
                 <img src={member.avatar} width="100px"/>
                 <h4>{member.username}</h4>
               </div>
