@@ -31,9 +31,12 @@ function MyTrinkets() {
 
   return (
     <>
-      <h1>My Trinkets</h1>
+      <div className="page-header">
+        <h1>My Trinkets</h1>
+      </div>
+
       <AddTrinket/>
-      <h2>{user.username}'s Trinkets</h2>
+      {/* <h2>{user.username}'s Trinkets</h2> */}
       <ul className="trinket-list">
         {
           userTrinkets.map( (trinket, index)=>(

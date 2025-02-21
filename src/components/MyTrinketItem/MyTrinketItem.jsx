@@ -33,24 +33,25 @@ function MyTrinketItem( trinket ) {
       <div className='trinket-header'>
         
         { borrowed && borrower.id !== user.id ? 
-          <p><img src={borrower.avatar} width="50px"/>In {borrower.username}'s Den</p> 
+          <p><img src={borrower.avatar} width="55px"/><span>In {borrower.username}'s Den</span></p> 
           : 
-          <p>In My Den</p> 
+          <p>&nbsp;</p> 
+        }
+        { 
+          trinket.trinket.owner_user_id === user.id ? (
+            <EditTrinket trinket={trinket.trinket}/>
+          ) : (
+            <></>
+          )
         }
       </div>
-      { 
-        trinket.trinket.owner_user_id === user.id ? (
-          <EditTrinket trinket={trinket.trinket}/>
-        ) : (
-          <></>
-        )
-      }
+      
       
       <img className="trinket-image" src={trinket.trinket.image} width="100%"/>
       <div className="trinket-details">
         <h3>{trinket.trinket.name}</h3>
         <p>owner: {trinket.trinket.owner_user_id}</p>
-        <p>category: {trinket.trinket.category}</p>
+        <p className={`trinket-category-text trinket-category-${trinket.trinket.category}`}>category: {trinket.trinket.category}</p>
            
       </div>
       

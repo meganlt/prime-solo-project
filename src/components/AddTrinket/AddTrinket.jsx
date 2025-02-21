@@ -3,6 +3,7 @@ import axios from 'axios';
 import useStore from '../../zustand/store';
 import { readAndCompressImage } from 'browser-image-resizer';
 import * as React from 'react';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -107,10 +108,17 @@ function AddTrinket() {
     <>
       
       <React.Fragment>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          <span className="material-symbols-outlined" onClick={handleClickOpen}>add</span>
-          Add New Trinket
-        </Button>
+        <Stack direction="row" spacing={2}>
+          <Button variant="contained" onClick={handleClickOpen} className="button-add-trinket">
+            <span className="material-symbols-outlined" onClick={handleClickOpen}>add</span>
+            Add New Trinket
+          </Button>
+        </Stack>
+        <button onClick={handleClickOpen} className="button-add-trinket">
+            <span className="material-symbols-outlined" onClick={handleClickOpen}>add</span>
+            Add New Trinket
+          </button>
+        
         <Dialog
           open={open}
           onClose={handleClose}

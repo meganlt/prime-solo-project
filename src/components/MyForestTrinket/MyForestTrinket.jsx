@@ -51,7 +51,7 @@ function MyForestTrinket(trinket) {
       <tr className="forest-trinket" onClick={handleClickOpen}>
         <td><img src={trinket.trinket.image}/></td>
         <td>{trinket.trinket.name}</td>
-        <td>{trinket.trinket.category}</td>
+        <td><p className={`trinket-category-text trinket-category-${trinket.trinket.category}`}>{trinket.trinket.category}</p></td>
         <td>{trinket.trinket.term}</td>
         <td className='owner'><img src={trinket.trinket.avatar} width="50px"/>{trinket.trinket.username}</td>
       </tr>
@@ -83,13 +83,13 @@ function MyForestTrinket(trinket) {
           <div className='trinket-detail-modal'>
             <div className='image-container'>
               <img src={trinket.trinket.image}/>
-              <p>{trinket.trinket.category}</p>
+              <p className={`trinket-category-text trinket-category-${trinket.trinket.category}`}>{trinket.trinket.category}</p>
             </div>
             <div className='detail-container'>
               <p>Borrow Terms: {trinket.trinket.term}</p>
               <p>Owned by:<img src={trinket.trinket.avatar} width="50px"/>{trinket.trinket.username}</p>
               <h3>Description:</h3>
-              <p>It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. Include links to any instruction manuals, product pages, or reviews you've written off-site!</p>
+              <p>{trinket.trinket.description}</p>
             </div>
             
           </div>
