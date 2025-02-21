@@ -400,3 +400,48 @@ button:hover, button:focus {
   }
 
 }
+
+/* ABOUT ME PAGE */
+
+.about-info {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.avatar-container {
+  display: flex;
+  row-gap: 8%;
+  column-gap: 10%;
+  width: 75%;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.avatar-label {
+  cursor: pointer;
+  text-align: center;
+  width: calc(33% - 8%);
+  display: flex;
+  flex-direction: column-reverse;
+
+  .avatar-image {
+    width:100%;
+    border: 2px solid transparent;
+    transition: 0.2s ease-in-out;
+    border-radius: 100px;
+
+    &:hover {
+      width: 105%;
+    }
+  }
+
+  input {
+    display: inline-block;
+  }
+
+  input[type="radio"]:checked + .avatar-image{
+    border: 2px solid rgb(var(--light-cool));
+    box-shadow: 0 0 10px rgba(var(--light-cool), 0.5);
+}
+}

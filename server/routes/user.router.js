@@ -65,5 +65,22 @@ router.post('/logout', (req, res, next) => {
   });
 });
 
+//Update user avatar
+router.put('/', (req, res)=>{
+  console.log('in User PUT:/', req.body, req.query);
+
+  const queryString = `UPDATE "user" SET "avatar"=$1 WHERE id = $2;`;
+  const values = [ req.body.newAvatar, req.body.userId ];
+
+  pool.query(queryString, values).then((results) => {
+      res.sendStatus(201)
+    })
+    .catch((err) => {
+      console.log('PUT /api/user/ err:', err);
+      res.sendStatus(500);
+    });
+
+});
+
 
 module.exports = router;
