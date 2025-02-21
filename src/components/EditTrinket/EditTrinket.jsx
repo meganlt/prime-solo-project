@@ -133,7 +133,7 @@ function EditTrinket(trinket) {
     <>
       
       <React.Fragment>
-        <Button variant="contained" onClick={handleEditClickOpen}><span className="material-symbols-outlined">edit</span></Button>
+        <button onClick={handleEditClickOpen}><span className="material-symbols-outlined">edit</span></button>
         <Dialog
           open={openEdit}
           onClose={handleEditClose}
@@ -144,7 +144,7 @@ function EditTrinket(trinket) {
             },
           }}
         >
-        <DialogTitle>Edit New Trinket</DialogTitle>
+        <DialogTitle><h3>Edit Trinket</h3></DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleEditClose}
@@ -265,8 +265,8 @@ function EditTrinket(trinket) {
         </DialogContent>
         
         <DialogActions>
-          <Button onClick={handleEditClose}>Cancel</Button>
-          <Button type="submit">Edit Trinket</Button>
+          <button onClick={handleEditClose}>Cancel</button>
+          <button type="submit">Edit Trinket</button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

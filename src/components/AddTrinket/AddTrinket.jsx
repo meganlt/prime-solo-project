@@ -108,12 +108,7 @@ function AddTrinket() {
     <>
       
       <React.Fragment>
-        <Stack direction="row" spacing={2}>
-          <Button variant="contained" onClick={handleClickOpen} className="button-add-trinket">
-            <span className="material-symbols-outlined" onClick={handleClickOpen}>add</span>
-            Add New Trinket
-          </Button>
-        </Stack>
+
         <button onClick={handleClickOpen} className="button-add-trinket">
             <span className="material-symbols-outlined" onClick={handleClickOpen}>add</span>
             Add New Trinket
@@ -222,8 +217,8 @@ function AddTrinket() {
           }  
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add Trinket</Button>
+          <button onClick={handleClose}>Cancel</button>
+          <button type="submit">Add Trinket</button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

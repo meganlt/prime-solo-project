@@ -30,7 +30,7 @@ function MyForest() {
 
   return (
     <>
-      <main className='myforest'>
+      <div className='myforest'>
         <div className='available-trinkets'>
           <h1>MyForest</h1>
           <h2>All Available Trinkets:</h2>
@@ -66,7 +66,7 @@ function MyForest() {
             ))
           }
         </aside>
-      </main>
+      </div>
     </>
   );
 }

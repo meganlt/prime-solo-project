@@ -25,13 +25,13 @@ function Nav() {
         user.id && (
           <>
             <li>
-              <NavLink to="/">My Den</NavLink>
+              <NavLink to="/"><span className="material-symbols-outlined">warehouse</span>My Den</NavLink>
             </li>
             <li>
-              <NavLink to="/mytrinkets">My Trinkets</NavLink>
+              <NavLink to="/mytrinkets"><span className="material-symbols-outlined">pet_supplies</span>My Trinkets</NavLink>
             </li>
             <li>
-              <NavLink to="/myforest">My Forest</NavLink>
+              <NavLink to="/myforest"><span className="material-symbols-outlined">forest</span>My Forest</NavLink>
             </li>
             <li>
               <NavLink to="/aboutme"><img src={user.avatar} width="40px"/>{user.username} <span className="material-symbols-outlined">settings</span></NavLink>

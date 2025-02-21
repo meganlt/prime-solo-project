@@ -12,6 +12,7 @@ function MyDen() {
   const fetchForestMembers = useStore((state)=>state.fetchForestMembers );
   const logOut = useStore((state) => state.logOut);
 
+  const [ isLoading, setIsLoading ] = useState(true); // Track loading state
   const [ requestList, setRequestList ] = useState( [] );
 
   function fetchUserRequests(userId){
@@ -29,6 +30,25 @@ function MyDen() {
     fetchAllTrinkets();
     fetchForestMembers();
   }, [] );
+
+  useEffect( ()=>{
+    const fetchData = async ()=>{
+      if (allTrinkets.length === 0) {
+        
+        await fetchAllTrinkets(user.id);
+        await fetchUserRequests(user.id);
+      }
+      if (forestMembers.length === 0) {
+        await fetchForestMembers();
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+    
+  }, [ ] );
+
+  if (isLoading) return <p>Loading Trinkets...</p>;
+  if (!forestMembers.length) return <p>no forest members found</p>;
 
   const lendingItems = allTrinkets.filter( function(trinket){
     return trinket.holder_user_id != user.id && trinket.owner_user_id == user.id;
