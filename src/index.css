@@ -15,14 +15,16 @@
 /* Colors & Fonts*/
 body{
   --dark-cool-primary: 34,11,67; /* dark purple*/
-  --med-cool-primary: 155, 54, 255; /* medium purple*/
+  --medium-cool-primary: 0,91,91; /* dark teal */
+  --med-bright-primary: 155, 54, 255; /* medium purple*/
   --light-cool: 61, 142, 203; /* med blue */
   --light-soft: 232, 174, 210; /*light pink*/
   --dark-forest-primary: 63, 107, 104; /* deep blue green */
   --med-forest-primary: 134, 141, 90; /* medium yellow green*/
-  --light-warm: 255,240,216; /*light yellow */
+  --lighter-warm: 255,240,216; /*light yellow */
+  --light-warm: 238,206,155; /*light beige */
 
-  --button-primary-color: var(--med-cool-primary);
+  --button-primary-color: var(--medium-cool-primary);
 
   --font-display: "Darumadrop One";
   --font-body: "Poppins";
@@ -116,6 +118,42 @@ header {
   h1 { margin: 10px 0 20px;}
 }
 
+.header-logo {
+  fill: rgba(var(--light-warm), .65 );
+  margin: 10px 0;
+  height: 80px;
+  opacity: 1;
+  transition: opacity 0.5s ease 0s;
+
+  .animal { 
+    fill: rgba(var(--light-warm), .75);
+  }
+  .r {
+    fill: rgba(var(--light-warm), 1);
+    margin: 4px;
+    animation-name: hopping;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 1s;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+  }
+
+  &:hover {
+    opacity: .6;
+    transition: opacity 0.5s ease 0s;
+  }
+
+}
+
+@keyframes hopping {
+  0%   {transform: translateY(0px);}
+  15%  {transform: translateY(-3px);}
+  40%  {transform: translateY(0px);}
+  85%  {transform: translateY(-5px);}
+  100% {transform: translateY(0px);}
+}
+
 /* Nav Styles: */
 nav ul {
   display: flex;
@@ -135,6 +173,11 @@ nav ul {
   li a {
     display: flex;
     align-items: center;
+  }
+
+  img{
+    width: 25px;
+    margin-right: 5px;
   }
 
   a {
@@ -171,8 +214,11 @@ input:focus {
 }
 
 button {
+  font-family: var(--font-body), sans-serif;
+  font-size: 1em;
   background-color: rgba(var(--button-primary-color), 1);
-  padding: 5px;
+  border-radius: 10px;
+  padding: 10px;
   margin-top: 10px;
 }
 
@@ -207,7 +253,7 @@ button:hover, button:focus {
     background-color: rgba(255,255,255, 0.25);
     width: calc(20% - 20px);
     min-width: 275px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
     flex-grow: 1;
     max-width: 375px;
@@ -254,6 +300,7 @@ button:hover, button:focus {
     height: 60%;
     object-fit: cover;
     max-height: 200px;
+    border-radius: 10px 10px 0 0;
   }
   
   .trinket-details { padding: 0 20px;}
@@ -407,6 +454,13 @@ button:hover, button:focus {
   display: flex;
   align-items: center;
   gap: 50px;
+  width: 75%;
+  margin: 0 auto;
+  justify-content: center;
+
+  img {
+    width: 25%;
+  }
 }
 
 .avatar-container {

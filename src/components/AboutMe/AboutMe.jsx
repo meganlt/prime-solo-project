@@ -31,7 +31,7 @@ function AboutMe() {
       <h1>About Me</h1>
       <div className="about-info">
         <img src={user.avatar} alt="avatar preview"/>
-        <div><h2>My username:</h2><p>{user.username}</p></div> 
+        <div><h2>My username:</h2><h3>{user.username}</h3></div> 
       </div>
       <div>
         <h2>Change Your Avatar:</h2>

@@ -34,7 +34,7 @@ function Nav() {
               <NavLink to="/myforest">My Forest</NavLink>
             </li>
             <li>
-              <NavLink to="/aboutme"><img src={user.avatar} width="50px"/>{user.username} <span className="material-symbols-outlined">settings</span></NavLink>
+              <NavLink to="/aboutme"><img src={user.avatar} width="40px"/>{user.username} <span className="material-symbols-outlined">settings</span></NavLink>
               <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
               <a className="logout" onClick={logOut}>Log Out<span className="material-symbols-outlined">logout</span></a>
             </li>
