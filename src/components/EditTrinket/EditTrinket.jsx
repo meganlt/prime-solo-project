@@ -137,6 +137,7 @@ function EditTrinket(trinket) {
         <Dialog
           open={openEdit}
           onClose={handleEditClose}
+          className="dialog-container"
           slotProps={{
             paper: {
               component: 'form',
@@ -144,7 +145,7 @@ function EditTrinket(trinket) {
             },
           }}
         >
-        <DialogTitle><h3>Edit Trinket</h3></DialogTitle>
+        <DialogTitle className="dialog-header">Edit Trinket</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleEditClose}
@@ -157,8 +158,37 @@ function EditTrinket(trinket) {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
-          <TextField
+        <DialogContent className="edit-container" dividers>
+        <div className='edit-actions'>
+        <label className="input-label-file">Trinket Image:</label>
+        <img src={trinket.trinket.image} width="100%"/>
+        <label htmlFor="newFile" className="input-label-file">Choose a new image:</label>
+          <input
+          id="newFile"
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+          />
+          
+          {
+            imagePreview && (
+              <>
+                <p>Preview of New Image:</p>
+                <img style={{maxHeight: '100px'}} src={imagePreview} />
+              </>
+            )
+          }  
+          <DialogContentText className='delete-content'>
+            <label className='delete-label'>Delete This Trinket:</label>
+            <label htmlFor="deleteCheck">
+              <input type="checkbox" id="deleteCheck" label="Yes, I'm sure" color="error"/> 
+              Yes, I want to delete this.
+              </label>
+            <button className='button-delete' onClick={deleteTrinket}>Confirm Deletion</button>
+          </DialogContentText>
+        </div>
+        <div className='edit-inputs'>
+        <TextField
             required
             margin="dense"
             id="trinketNameInput"
@@ -227,9 +257,7 @@ function EditTrinket(trinket) {
             </Select>
         </FormControl>
                 
-          <h3>Description:</h3>
-          <p>It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. Include links to any instruction manuals, product pages, or reviews you've written off-site!</p>
-          <InputLabel>Description</InputLabel>
+          <p><InputLabel>Description</InputLabel>It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. </p>
           <TextField
             id="trinketDescInput"
           name="trinketDesc"
@@ -239,29 +267,9 @@ function EditTrinket(trinket) {
           fullWidth
           defaultValue={trinket.trinket.description}
           />
-          Trinket Image:
+        </div>
           
-          <input
-            type="file"
-            accept="image/*"
-            onChange={onFileChange}
-          />
-          Current image: <img src={trinket.trinket.image} width="100px"/>
-          {
-            imagePreview && (
-              <>
-                <br />
-                <br />
-                <p>Preview of New Image:</p>
-                <img style={{maxHeight: '100px'}} src={imagePreview} />
-              </>
-            )
-          }  
-          <DialogContentText>
-            DELETE - are you sure?
-            <input type="checkbox" id="deleteCheck" label="Yes, I'm sure" color="error"/> <label htmlFor="deleteCheck">yes, i'm sure.</label>
-            <Button variant="contained" color="error" onClick={deleteTrinket}>Delete this trinket</Button>
-          </DialogContentText>
+          
         </DialogContent>
         
         <DialogActions>

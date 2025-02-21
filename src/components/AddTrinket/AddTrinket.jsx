@@ -117,6 +117,7 @@ function AddTrinket() {
         <Dialog
           open={open}
           onClose={handleClose}
+          className="dialog-container"
           slotProps={{
             paper: {
               component: 'form',
@@ -124,7 +125,7 @@ function AddTrinket() {
             },
           }}
         >
-        <DialogTitle>Add New Trinket</DialogTitle>
+        <DialogTitle className="dialog-header">Add New Trinket</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -138,7 +139,7 @@ function AddTrinket() {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <DialogContentText>
+          <DialogContentText className="dialog-p">
             Add a new trinket to your den, so you can share it with your forest!
           </DialogContentText>
           <TextField
@@ -172,25 +173,23 @@ function AddTrinket() {
               <MenuItem value="tool">Tool</MenuItem>
               <MenuItem value="video-game">Video Game</MenuItem>
             </Select>
-        </FormControl>
-        <FormControl required sx={{ m: 0, mt: 2, width: 1/2  }} size="small">
-            <InputLabel id="borrow-select-label">Borrow Type</InputLabel>
-            <Select
-              labelId="borrow-select-label"
-              id="trinketTermsInput"
-              value={trinketTerms}
-              label="Trinket Type"
-              name="trinketTerms"
-              onChange={handleTermsChange}
-            >
-              <MenuItem value="short-term">Short-Term Borrow</MenuItem>
-              <MenuItem value="long-term">Long-Term Borrow</MenuItem>
-              <MenuItem value="giveaway">Giveaway</MenuItem>
-            </Select>
-        </FormControl>          
-          <h3>Description:</h3>
-          <p>It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. Include links to any instruction manuals, product pages, or reviews you've written off-site!</p>
-          <InputLabel>Description</InputLabel>
+          </FormControl>
+          <FormControl required sx={{ m: 0, mt: 2, width: 1/2  }} size="small">
+              <InputLabel id="borrow-select-label">Borrow Type</InputLabel>
+              <Select
+                labelId="borrow-select-label"
+                id="trinketTermsInput"
+                value={trinketTerms}
+                label="Trinket Type"
+                name="trinketTerms"
+                onChange={handleTermsChange}
+              >
+                <MenuItem value="short-term">Short-Term Borrow</MenuItem>
+                <MenuItem value="long-term">Long-Term Borrow</MenuItem>
+                <MenuItem value="giveaway">Giveaway</MenuItem>
+              </Select>
+          </FormControl>
+          <p><InputLabel>Description</InputLabel> It helps to include some information about how to use your trinket, or a hint of the plot if it's a book or movie. </p>
           <TextField
             id="trinketDescInput"
           name="trinketDesc"
@@ -199,7 +198,7 @@ function AddTrinket() {
           maxRows={8}
           fullWidth
           />
-          Trinket Image:
+          <label className="input-label-file">Trinket Image:</label>
           <input
             type="file"
             accept="image/*"
@@ -208,9 +207,7 @@ function AddTrinket() {
           {
             imagePreview && (
               <>
-                <br />
-                <br />
-                <p>Preview</p>
+                <p>Preview:</p>
                 <img style={{maxHeight: '100px'}} src={imagePreview} />
               </>
             )

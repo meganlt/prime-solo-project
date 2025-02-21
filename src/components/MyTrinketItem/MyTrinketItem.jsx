@@ -29,7 +29,7 @@ function MyTrinketItem( trinket ) {
   }
 
   return (
-    <li className={ `borrowed-${borrowed} trinket-${trinket.trinket.category}`}>
+    <li className={ `borrowed-${borrowed} trinket-${trinket.trinket.category} trinket-${trinket.trinket.status}`}>
       <div className='trinket-header'>
         
         { borrowed && borrower.id !== user.id ? 
