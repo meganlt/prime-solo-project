@@ -26,8 +26,8 @@ function RegisterPage() {
   };
 
   return (
-    <>
-      <h2>Register Page</h2>
+    <div className='main-login'>
+      <h2>Register Here:</h2>
       <form onSubmit={handleRegister}>
         <label htmlFor="username">Username:</label>
         <input
@@ -54,7 +54,7 @@ function RegisterPage() {
           <h3>{errorMessage}</h3>
         )
       }
-    </>
+    </div>
   );
 }
 

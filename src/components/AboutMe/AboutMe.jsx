@@ -35,36 +35,36 @@ function AboutMe() {
       </div>
       <div>
         <h2>Change Your Avatar:</h2>
-        <form onSubmit={updateAvatar}>
+        <form onSubmit={updateAvatar} className="avatar-form">
           <div className="avatar-container">
             <label className="avatar-label">
               <input type="radio" name="avatar" value="avatar-rabbit" required/>
-              <img src="img/avatar-rabbit.png" alt="Avatar1" className="avatar-image"/>
+              <img src="img/avatar-rabbit.png" alt="Rabbit Avatar" className="avatar-image"/>
 
             </label>
             <label className="avatar-label">
                 <input type="radio" name="avatar" value="avatar-raccoon" required/>
-                <img src="img/avatar-raccoon.png" alt="Avatar2" className="avatar-image"/>
+                <img src="img/avatar-raccoon.png" alt="Raccoon Avatar" className="avatar-image"/>
 
             </label>
             <label className="avatar-label">
-                <input type="radio" name="avatar" value="avatar3" required/>
-                <img src="img/avatar-rabbit.png" alt="Avatar3" className="avatar-image"/>
+                <input type="radio" name="avatar" value="avatar-owl" required/>
+                <img src="img/avatar-owl.png" alt="Owl Avatar" className="avatar-image"/>
 
             </label>
             <label className="avatar-label">
-                <input type="radio" name="avatar" value="avatar4" required/>
-                <img src="img/avatar-raccoon.png" alt="Avatar 4" className="avatar-image"/>
+                <input type="radio" name="avatar" value="avatar-squirrel" required/>
+                <img src="img/avatar-squirrel.png" alt="Squirrel Avatar" className="avatar-image"/>
 
             </label>
             <label className="avatar-label">
-                <input type="radio" name="avatar" value="avatar5" required/>
-                <img src="img/avatar-rabbit.png" alt="Avatar 5" className="avatar-image"/>
+                <input type="radio" name="avatar" value="avatar-fox" required/>
+                <img src="img/avatar-fox.png" alt="Fox Avatar" className="avatar-image"/>
 
             </label>
             <label className="avatar-label">
-                <input type="radio" name="avatar" value="avatar6" required/>
-                <img src="img/avatar-raccoon.png" alt="Avatar 6" className="avatar-image"/>
+                <input type="radio" name="avatar" value="avatar-deer" required/>
+                <img src="img/avatar-deer.png" alt="Deer Avatar" className="avatar-image"/>
 
             </label>
           </div>

@@ -26,8 +26,9 @@ function LoginPage() {
   };
 
   return (
-    <>
-      <h2>Login Page</h2>
+    <div className='main-login'>
+      <h2>Login</h2>
+      <p>Login here to start sharing trinkets with your friends:</p>
       <form onSubmit={handleLogIn}>
         <label htmlFor="username">Username:</label>
         <input
@@ -54,7 +55,7 @@ function LoginPage() {
           <h3>{errorMessage}</h3>
         )
       }
-    </>
+    </div>
   );
 }
 
