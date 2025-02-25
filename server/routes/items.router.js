@@ -36,7 +36,8 @@ router.get('/available/:userId', (req, res) => {
   const queryString = `SELECT items.id, items.image, items.name, items.category, items.term, items.description, items.owner_user_id, "user".username, "user".avatar 
   FROM "user"
   JOIN "items" ON "user".id = items.owner_user_id
-  WHERE items.status = 'available' AND items.owner_user_id != $1;`
+  WHERE items.status = 'available' AND items.owner_user_id != $1
+  ORDER BY items.id;`
   const values = [userId]
   pool.query( queryString, values ).then((results)=>{
     res.send(results.rows);
@@ -50,7 +51,7 @@ router.get('/available/:userId', (req, res) => {
 router.get('/:userId', (req, res) => {
   console.log('in GET/userID:', req.params);
   const userId = req.params.userId;
-  const queryString = `SELECT * from "items" WHERE "owner_user_id"= $1;`
+  const queryString = `SELECT * from "items" WHERE "owner_user_id"= $1 ORDER BY id;`
   const values = [userId] ;
   pool.query( queryString, values ).then((results)=>{
     res.send(results.rows);
@@ -186,15 +187,41 @@ router.put('/', async (req, res)=>{
 });
 
 // DELETE to Delete Trinket
-router.delete('/', (req,res)=>{
-  console.log('DELETE/:', req.query);
-  const queryString = `DELETE FROM "items" WHERE id=$1;`;
-  const id = req.query.id;
-  pool.query( queryString, [id]).then( (results)=>{
-    res.sendStatus(200);
-}).catch( (err)=>{
-    res.sendStatus(500);
-})
+router.delete('/', async (req,res)=>{
+  console.log('DELETE/:', req.query.id);
+  // const queryString = `BEGIN;
+
+  // DELETE FROM "requests" WHERE message_item = $1;
+  // DELETE FROM "items" WHERE id = $1;
+
+  // COMMIT;`;
+  //   const values = [req.query.id];
+  //   pool.query( queryString, values).then( (results)=>{
+  //     res.sendStatus(200);
+  // }).catch( (err)=>{
+  //     res.sendStatus(500);
+  // })
+
+  const client = await pool.connect(); // Get a database client
+
+    try {
+        await client.query('BEGIN'); // Start a transaction
+
+        // First, delete related requests
+        await client.query('DELETE FROM "requests" WHERE message_item = $1', [req.query.id]);
+
+        // Then, delete the item itself
+        await client.query('DELETE FROM "items" WHERE id = $1', [req.query.id]);
+
+        await client.query('COMMIT'); // Commit the transaction
+        res.sendStatus(200);
+    } catch (err) {
+        await client.query('ROLLBACK'); // Roll back changes if an error occurs
+        console.error('Error deleting item:', err);
+        res.sendStatus(500);
+    } finally {
+        client.release(); // Release the database client
+    }
 });
 
 

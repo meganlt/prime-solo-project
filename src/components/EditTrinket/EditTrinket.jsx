@@ -109,14 +109,16 @@ function EditTrinket(trinket) {
     setImagePreview(undefined);
   }
 
-  function deleteTrinket(){
+  function deleteTrinket(e){
     console.log('in deleteTrinket', trinket.trinket.id);
 
     let checkedInputState = document.getElementById('deleteCheck').checked;
 
     if(checkedInputState){
+      e.preventDefault();
       axios.delete(`/api/items?id=${trinket.trinket.id}`).then( function(response){
         console.log('back from delete:', response.data);
+        handleEditClose();
         fetchUserTrinkets(user.id);
       }).catch( function(err){
         console.log(err);
