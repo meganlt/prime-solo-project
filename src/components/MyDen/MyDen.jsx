@@ -10,26 +10,28 @@ function MyDen() {
   const allTrinkets = useStore((state) => state.allTrinkets );
   const forestMembers = useStore((state)=>state.forestMembers );
   const fetchForestMembers = useStore((state)=>state.fetchForestMembers );
+  const fetchUserRequests = useStore( (state)=>state.fetchUserRequests);
+  const requestList = useStore((state) => state.requestList );
   const logOut = useStore((state) => state.logOut);
 
   const [ isLoading, setIsLoading ] = useState(true); // Track loading state
-  const [ requestList, setRequestList ] = useState( [] );
+  // const [ requestList, setRequestList ] = useState( [] );
 
-  function fetchUserRequests(userId){
-    console.log('in fetchRequests', userId);
-    axios.get(`/api/requests/${userId}`).then( function(response){
-      console.log('back from GET:', response.data);
-      setRequestList( response.data );
-    }).catch( function(err){
-      console.log( err );
-      alert('error getting users requests');
-    })
-  }
-  useEffect( ()=>{
-    fetchUserRequests(user.id);
-    fetchAllTrinkets();
-    fetchForestMembers();
-  }, [] );
+  // function fetchUserRequests(userId){
+  //   console.log('in fetchRequests', userId);
+  //   axios.get(`/api/requests/${userId}`).then( function(response){
+  //     console.log('back from GET:', response.data);
+  //     setRequestList( response.data );
+  //   }).catch( function(err){
+  //     console.log( err );
+  //     alert('error getting users requests');
+  //   })
+  // }
+  // useEffect( ()=>{
+  //   fetchUserRequests(user.id);
+  //   fetchAllTrinkets();
+  //   fetchForestMembers();
+  // }, [] );
 
   useEffect( ()=>{
     const fetchData = async ()=>{

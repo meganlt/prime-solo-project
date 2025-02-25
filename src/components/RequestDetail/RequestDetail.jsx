@@ -6,6 +6,8 @@ import { Button } from '@mui/material';
 function RequestDetail(request) {
   console.log('request:', request);
   const user = useStore((state) => state.user);
+  const fetchAllTrinkets = useStore( (state)=>state.fetchAllTrinkets);
+  const allTrinkets = useStore((state) => state.allTrinkets );
   const requester = request.forestMembers.find( forestMember => forestMember.id === request.request.sent_by);
   const [ requestResponse, setRequestResponse ] = useState( '' );
   const handleRequestResponseChange = (event) => {  setRequestResponse(event.target.value);};
@@ -22,6 +24,7 @@ function RequestDetail(request) {
     console.log('objectTosend:', objectToSend);
     axios.put('/api/requests', objectToSend).then( function(response){
       console.log('back from Put:/', response.data);
+      request.fetchUserRequests(user.id);
     }).catch( function(err){
       console.log(err);
       alert('error setting request');
@@ -41,6 +44,7 @@ function RequestDetail(request) {
 
     axios.post('/api/requests', objectToSend).then( function(response){
       console.log('back from POST:', response.data);
+      request.fetchUserRequests(user.id);
     }).catch( function(err){
       console.log(err);
       alert('error sending request!');
@@ -53,7 +57,7 @@ function RequestDetail(request) {
 
     updateRequest();
     createYesRequestResponse();
-    request.fetchUserRequests(user.id)
+    request.fetchUserRequests(user.id);
 
   }
 
@@ -64,7 +68,7 @@ function RequestDetail(request) {
     }
     axios.put('/api/requests/end', objectToSend).then( function(response){
       console.log('back from Put:/', response.data);
-      request.fetchUserRequests(user.id)
+      request.fetchUserRequests(user.id);
     }).catch( function(err){
       console.log(err);
       alert('error setting request');

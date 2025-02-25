@@ -31,6 +31,17 @@ const communitySlice = (set, get) => ({
     //   console.log(err);
     //   alert('error getting forest members');
     // })
+  },
+  requestList: [],
+  fetchUserRequests: (userId)=>{
+    console.log('in fetchRequests', userId);
+    axios.get(`/api/requests/${userId}`).then( function(response){
+      console.log('back from GET:', response.data);
+      set( {requestList: response.data })
+    }).catch( function(err){
+      console.log( err );
+      alert('error getting users requests');
+    })
   }
 })
 

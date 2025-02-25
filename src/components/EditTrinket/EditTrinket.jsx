@@ -20,8 +20,11 @@ import Select from '@mui/material/Select';
 
 function EditTrinket(trinket) {
   const user = useStore((state) => state.user);
+  const fetchAllTrinkets = useStore( (state)=>state.fetchAllTrinkets);
+  const allTrinkets = useStore((state) => state.allTrinkets );
   const fetchUserTrinkets = useStore( (state)=>state.fetchUserTrinkets);
   console.log(trinket);
+  const fetchUserRequests = useStore( (state)=>state.fetchUserRequests);
   
   // Initial hook and setup for dialog
   const [openEdit, setOpenEdit] = useState(false);
@@ -94,6 +97,8 @@ function EditTrinket(trinket) {
       console.log( response );
       clearForm();
       fetchUserTrinkets(user.id);
+      fetchAllTrinkets(user.id);
+      fetchUserRequests(user.id);
     }).catch( function(err){
       console.log(err);
       alert('error posting to server');
@@ -120,6 +125,8 @@ function EditTrinket(trinket) {
         console.log('back from delete:', response.data);
         handleEditClose();
         fetchUserTrinkets(user.id);
+        fetchAllTrinkets(user.id);
+        fetchUserRequests(user.id);
       }).catch( function(err){
         console.log(err);
         alert('error deleting trinket');
