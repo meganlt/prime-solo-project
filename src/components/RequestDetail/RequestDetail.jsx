@@ -12,6 +12,7 @@ function RequestDetail(request) {
   const [ requestResponse, setRequestResponse ] = useState( '' );
   const handleRequestResponseChange = (event) => {  setRequestResponse(event.target.value);};
 
+  // Updating the original request (borrow-request) to responded, and with the Response of Yes or No.
   function updateRequest(){
     console.log('in updateRequest');
     const objectToSend = {
@@ -25,12 +26,14 @@ function RequestDetail(request) {
     axios.put('/api/requests', objectToSend).then( function(response){
       console.log('back from Put:/', response.data);
       request.fetchUserRequests(user.id);
+      fetchAllTrinkets();
     }).catch( function(err){
       console.log(err);
       alert('error setting request');
     });
   }
 
+  // Creating a new request (request-response) to the original sender to let them know the status, sending along the choice from updateRequest.
   function createYesRequestResponse(){
     console.log('in createYesRequestResponse');
     const objectToSend = {

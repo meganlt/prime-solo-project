@@ -80,9 +80,7 @@ function MyDen() {
       }
       { 
       requestList.map( (request, index)=>(
-        // TODO: Turn into a component so this isn't as complicated.
-        <RequestDetail key={index} request={request} forestMembers={forestMembers} fetchUserRequests={fetchUserRequests}/>
-        
+        <RequestDetail key={index} request={request} forestMembers={forestMembers} fetchUserRequests={fetchUserRequests}/>   
       ))
       }
       <h2>Borrowing:</h2>
