@@ -65,15 +65,15 @@ function MyDen() {
       <h1>My Den</h1>
       <ul className="den-summary">
         <li><span className='den-summary-number'>{requestList.length}</span><br/> Requests</li>
-        <li><span className='den-summary-number'>{lendingItems.length}</span><br/> Lending</li>
         <li><span className='den-summary-number'>{borrowingItems.length}</span><br/> Borrowing</li>
+        <li><span className='den-summary-number'>{lendingItems.length}</span><br/> Lending</li>
       </ul>
       <h2>Requests:</h2>
       {
         requestList.length > 0 ? (
-          <p>you have some requests:</p>
+          <p className='subhead'>You have some requests:</p>
         ) : (
-          <p>No requests right now. Get out there and make some friends!</p>
+          <p className='subhead'>No requests right now. Get out there and make some friends!</p>
         )
       }
       { 
@@ -86,9 +86,9 @@ function MyDen() {
       <h2>Borrowing:</h2>
       {
         borrowingItems.length > 0 ? (
-          <p>You are borrowing {borrowingItems.length} items right now:</p>
+          <p className='subhead'>You are borrowing {borrowingItems.length} items right now:</p>
         ) : (
-          <p>You aren't borrowing anything right now. Get out there and find some trinkets!</p>
+          <p className='subhead'>You aren't borrowing anything right now. Get out there and find some trinkets!</p>
         )
       }
       <ul className="trinket-list">
@@ -101,9 +101,9 @@ function MyDen() {
       <h2>Lending:</h2>
       {
         lendingItems.length > 0 ? (
-          <p>You are lending {lendingItems.length} items right now:</p>
+          <p className='subhead'>You are lending {lendingItems.length} items right now:</p>
         ) : (
-          <p>You aren't lending anything right now.</p>
+          <p className='subhead'>You aren't lending anything right now.</p>
         )
       }
       <ul className="trinket-list">

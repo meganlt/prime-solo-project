@@ -254,6 +254,7 @@ function EditTrinket(trinket) {
             >
               <MenuItem value="available">available</MenuItem>
               <MenuItem value="hidden">hidden</MenuItem>
+              <MenuItem value="borrowed">borrowed</MenuItem>
             </Select>
         </FormControl>
                 

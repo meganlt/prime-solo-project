@@ -59,6 +59,7 @@ function MyForestTrinket(trinket) {
         <Dialog
           open={open}
           onClose={handleClose}
+          className='dialog-container'
           slotProps={{
             paper: {
               component: 'form',
@@ -66,7 +67,7 @@ function MyForestTrinket(trinket) {
             },
           }}
         >
-        <DialogTitle>{trinket.trinket.name}</DialogTitle>
+        <DialogTitle className="dialog-header">{trinket.trinket.name}</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -79,38 +80,40 @@ function MyForestTrinket(trinket) {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
+        <DialogContent dividers className=''>
           <div className='trinket-detail-modal'>
             <div className='image-container'>
               <img src={trinket.trinket.image}/>
               <p className={`trinket-category-text trinket-category-${trinket.trinket.category}`}>{trinket.trinket.category}</p>
             </div>
             <div className='detail-container'>
-              <p>Borrow Terms: {trinket.trinket.term}</p>
-              <p>Owned by:<img src={trinket.trinket.avatar} width="50px"/>{trinket.trinket.username}</p>
-              <h3>Description:</h3>
+              <p><span className="trinket-label">Borrow Terms:</span> {trinket.trinket.term}</p>
+              <p className='trinket-owner'><span className="trinket-label">Owned by:</span><img className="trinket-owner-image" src={trinket.trinket.avatar} width="50px"/>{trinket.trinket.username}</p>
+              <p><span className="trinket-label">Description:</span></p>
               <p>{trinket.trinket.description}</p>
             </div>
-            
           </div>
-          <h2>Request to Borrow:</h2>
-          <input type="hidden" value={user.id} name="trinketRequester" id="trinketRequesterInput"/>
-          <input type="hidden" value={trinket.trinket.owner_user_id} name="trinketOwnerId" id="trinketOwnerIdInput"/>
-          <InputLabel>additonal details (optional)</InputLabel>
-          <TextField
-            id="trinketDescInput"
-          name="trinketDesc"
-          multiline
-          minRows={4}
-          maxRows={8}
-          fullWidth
-          onChange={handleRequestDetailsChange}
-          /> 
+          <div className='request-detail-form'>
+              <h2>Request to Borrow:</h2>
+              <input type="hidden" value={user.id} name="trinketRequester" id="trinketRequesterInput"/>
+              <input type="hidden" value={trinket.trinket.owner_user_id} name="trinketOwnerId" id="trinketOwnerIdInput"/>
+              <InputLabel><span className="trinket-label">Additonal Details (optional)</span></InputLabel>
+              <TextField
+                id="trinketDescInput"
+              name="trinketDesc"
+              multiline
+              minRows={4}
+              maxRows={8}
+              fullWidth
+              onChange={handleRequestDetailsChange}
+              /> 
+            </div>
+
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant='contained' type="submit">send request</Button>
+          <button onClick={handleClose}>Cancel</button>
+          <button type="submit">send request</button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

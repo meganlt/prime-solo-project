@@ -104,17 +104,17 @@ function RequestDetail(request) {
               <label htmlFor="responseInputYes">Yes, call me to arrange pickup!</label><br/>
               <input type="radio" id="responseInputNo" name="responseInput" value="No" required onChange={handleRequestResponseChange}/>
               <label htmlFor="responseInputNo">Sorry, not now!</label><br/>
-              <Button variant="contained" type="submit">respond</Button>
+              <button variant="contained" type="submit">respond</button>
             </form>
           </>
         ) : (
-          <Button variant='contained' onClick={endRequest}>
+          <button onClick={endRequest}>
             {request.request.details === 'Yes' ? (
               <span>Ok, I'll contact them</span>
             ) : (
               <span>Ok, thanks anyway!</span>
             )}
-          </Button>
+          </button>
         )}
           
         </div>

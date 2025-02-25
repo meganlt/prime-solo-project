@@ -50,7 +50,7 @@ function MyTrinketItem( trinket ) {
       <img className="trinket-image" src={trinket.trinket.image} width="100%"/>
       <div className="trinket-details">
         <h3>{trinket.trinket.name}</h3>
-        <p>owner: {trinket.trinket.owner_user_id}</p>
+        <p>Borrow Term: {trinket.trinket.term}</p>
         <p className={`trinket-category-text trinket-category-${trinket.trinket.category}`}>category: {trinket.trinket.category}</p>
            
       </div>

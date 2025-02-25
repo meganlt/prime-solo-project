@@ -83,7 +83,7 @@ function AddTrinket() {
     formData.append('image', selectedFile);
 
 
-    const formJson = Object.fromEntries(formData.entries());
+    // const formJson = Object.fromEntries(formData.entries());
 
     axios.post(`/api/items?imageName=${fileName}&imageType=${fileType}`, formData ).then( function( response ){
       console.log( response );
