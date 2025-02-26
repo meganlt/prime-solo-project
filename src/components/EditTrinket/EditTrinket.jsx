@@ -283,7 +283,8 @@ function EditTrinket(trinket) {
         </DialogContent>
         
         <DialogActions>
-          <button onClick={handleEditClose}>Cancel</button>
+          {/* TO DO: fix this button so it doesn't submit changes when canceling
+          <button onClick={handleEditClose}>Cancel</button> */}
           <button type="submit">Edit Trinket</button>
         </DialogActions>
       </Dialog>
