@@ -212,7 +212,7 @@ function EditTrinket(trinket) {
           <input type="hidden" value={user.id} name="trinketUser" id="trinketUserInput"/>
           <input type="hidden" value={trinket.trinket.id} name="trinketId" id="trinketIdInput"/>
           <input type="hidden" value={trinket.trinket.holder_user_id} name="trinketHolderId" id="trinketHolderIdInput"/>
-          <input type="checkbox" id="returnHomeInput"color="error" onChange={handleTrinketReturn}/> <label htmlFor="returnHomeInput">This item was just returned!</label><br/>  
+          {/* <input type="checkbox" id="returnHomeInput"color="error" onChange={handleTrinketReturn}/> <label htmlFor="returnHomeInput">This item was just returned!</label><br/>   */}
           <FormControl required sx={{ m: 0, ml: 0, mt:2, pr:2, width: 1/2 }} size="small">
             <InputLabel id="select-category-label">Trinket Type</InputLabel>
             <Select
