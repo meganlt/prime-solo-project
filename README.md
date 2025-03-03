@@ -58,7 +58,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](./public/img/feature-preview.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -195,7 +195,7 @@ First, I'd like to thank my husband, Dustin, for the support, hand-delivered din
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/megantegeder
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: public/img/feature-preview.gif
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
