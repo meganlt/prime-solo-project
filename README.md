@@ -93,7 +93,7 @@ To get your own version of BorrowBurrow running, follow the steps below in this 
 
 3. Setup a PUBLIC BUCKET on Amazon S3, and a user (via IAM) with the appropriate privileges to read & write to this bucket.
 
-## Create Database and Required Tables
+### Create Database and Required Tables
 
 Create a new PostgreSQL database on your local machine, then create the `user`, `items`, and `requests` tables using the queries found in `database.sql`.
 
