@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/meganlt/prime-solo-project">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="public/img/color_logo.svg" alt="Logo" width="75%" >
   </a>
 
 <h3 align="center">BorrowBurrow</h3>
