@@ -9,10 +9,9 @@ axios.defaults.withCredentials = true;
 const itemSlice = (set, get) => ({
   userTrinkets: [],
   fetchUserTrinkets: async function(userId) {
-    console.log('STORE: in fetchUserTrinkets. UserID:', userId);
-
+    // console.log('STORE: in fetchUserTrinkets. UserID:', userId);
     try {
-      console.log("TRY: Fetching user trinkets for:", userId);
+      // console.log("TRY: Fetching user trinkets for:", userId);
       const response = await axios.get(`/api/items/${userId}`);
 
       // Checking if data has changed before updating, to limit renders:
@@ -22,20 +21,12 @@ const itemSlice = (set, get) => ({
     } catch (error) {
       console.error("Error fetching trinkets:", error);
     }
-
-    // axios.get(`/api/items/${userId}`).then( function(response){
-    //   console.log(response.data);
-    //   set( { userTrinkets: response.data } );
-    // }).catch( function(err){
-    //   console.log(err);
-    //   alert('error getting users trinkets');
-    // })
   },
   allTrinkets: [],
   fetchAllTrinkets: function() {
-    console.log('in fetchAllTrinkets');
+    // console.log('in fetchAllTrinkets');
     axios.get(`/api/items`).then( function(response){
-      console.log( response.data );
+      // console.log( response.data );
       set( {allTrinkets: response.data })
     }).catch( function(err){
       console.log(err);
@@ -44,9 +35,9 @@ const itemSlice = (set, get) => ({
   },
   availableTrinkets: [],
   fetchAvailableTrinkets: function(userId){
-    console.log('in fetchAllTrinkets');
+    // console.log('in fetchAllTrinkets');
     axios.get(`/api/items/available/${userId}`).then( function(response){
-      console.log( response.data );
+      // console.log( response.data );
       set( {availableTrinkets: response.data })
     }).catch( function(err){
       console.log(err);

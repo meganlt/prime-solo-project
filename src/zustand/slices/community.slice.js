@@ -25,9 +25,9 @@ const communitySlice = (set, get) => ({
   },
   requestList: [],
   fetchUserRequests: (userId)=>{
-    console.log('in fetchRequests', userId);
+    // console.log('in fetchRequests', userId);
     axios.get(`/api/requests/${userId}`).then( function(response){
-      console.log('back from GET:', response.data);
+      // console.log('back from GET:', response.data);
       set( {requestList: response.data })
     }).catch( function(err){
       console.log( err );

@@ -505,11 +505,6 @@ button {
   }
 }
 
-.trinket-category-text {
-  /* padding-left: 20px; */
-  
-}
-
 .trinket-category-text::before {
   display: inline-block;
   line-height: 1;;
