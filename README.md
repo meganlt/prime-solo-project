@@ -1,11 +1,6 @@
 <!-- This README was created based on the example here: https://github.com/othneildrew/Best-README-Template/ -->
 <a id="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-
-[![Stargazers][stars-shield]][stars-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -173,8 +168,10 @@ Project Link: [https://github.com/meganlt/prime-solo-project](https://github.com
 First, I'd like to thank my husband, Dustin, for the support, hand-delivered dinners, and much needed flying-dinosaur wrangling necessary during my courses at Prime and long coding sessions. I'd also like to thank my fellow classmates in the North Cascades cohort. We went through a lot with a merge, and still never hesitated to help one another! I'd also like to thank our instructor, Dev, and T.A. Marc, and Carlos from the part-time office hours.
 
 * Logo created with the Google font Darumadrop One, available here: [Darumadrop One](https://fonts.google.com/specimen/Darumadrop+One)
-* Background "firefly" animation customized from code provided here: []()
-* Background "noise" pattern customized from code here:[]()
+* Background "firefly" animation customized from code provided here: [Starry Night](https://codepen.io/vafelman/pen/opBBEN)
+* Background noise pattern referenced from here: [CSS Background Noise](https://coderwall.com/p/m-uwvg/css-background-noise)
+* Helpful video used to reference Amazon AWS bucket setup: [
+Upload Images Directly to S3 from Front End](https://www.youtube.com/watch?v=yGYeYJpRWPM&t=817s)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

@@ -67,7 +67,7 @@ router.post('/logout', (req, res, next) => {
 
 //Update user avatar
 router.put('/', (req, res)=>{
-  console.log('in User PUT:/', req.body, req.query);
+  // console.log('in User PUT:/', req.body, req.query);
 
   const queryString = `UPDATE "user" SET "avatar"=$1 WHERE id = $2;`;
   const values = [ req.body.newAvatar, req.body.userId ];

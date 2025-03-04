@@ -49,7 +49,7 @@ router.get('/available/:userId', (req, res) => {
 
 // GET all trinkets owned by the currently logged in user:
 router.get('/:userId', (req, res) => {
-  console.log('in GET/userID:', req.params);
+  // console.log('in GET/userID:', req.params);
   const userId = req.params.userId;
   const queryString = `SELECT * from "items" WHERE "owner_user_id"= $1 ORDER BY id;`
   const values = [userId] ;
@@ -64,9 +64,9 @@ router.get('/:userId', (req, res) => {
 
 // POST new trinket
 router.post('/', async (req, res)=>{
-  console.log('POST req.files/:', req.files);
-  console.log('POST req.body/:', req.body);
-  console.log('POST req.query/:', req.query);
+  // console.log('POST req.files/:', req.files);
+  // console.log('POST req.body/:', req.body);
+  // console.log('POST req.query/:', req.query);
 
   try {
     // setup variables for s3
@@ -85,7 +85,6 @@ router.post('/', async (req, res)=>{
         Body: imageData, // image data to upload
         ContentType: imageType, // ensure image type
     });
-    
     
     // Get response from s3 client
     const response = await s3Client.send(command);
@@ -129,8 +128,9 @@ router.put('/', async (req, res)=>{
   // TO DO: STRETCH: remove old image from AWS before uploading new
 
   try {
+    // Check if new image data exists
     if( req.files !== null) {
-      // setup variables for s3
+      // If new image data exists, setup data to send to AWS 
       const imageName = req.query.imageName;
       const imageType = req.query.imageType
       const imageData = req.files.image.data;
@@ -143,12 +143,12 @@ router.put('/', async (req, res)=>{
           ContentType: imageType, // ensure image type
       });
       
-      
       // Get response from s3 client
       const response = await s3Client.send(command);
       // console.log('response:', response); // Used for debugging
+      // Setup new image URL from AWS
       const imageURL = 'https://borrow-burrow-public.s3.us-east-1.amazonaws.com/images/'+imageName;
-      // Assemble query string for non-image items
+      // Assemble query string for non-image items, and add new image URL
       queryString = `UPDATE "items" 
       SET "name"=$1,
         "category"=$2,
@@ -159,9 +159,10 @@ router.put('/', async (req, res)=>{
         "image"=$7
       WHERE id=$8;`;
     
-        // Assemble values array
+        // Assemble values array WITH IMAGE
         values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, checkedHolder, req.body.trinketDesc, imageURL, id ];
     } else {
+      // If no image data exists, setup query to update all other rows
       queryString = `UPDATE "items" 
       SET "name"=$1,
         "category"=$2,
@@ -171,12 +172,11 @@ router.put('/', async (req, res)=>{
         "description"=$6
       WHERE id=$7;`;
     
-      // Assemble values array
+      // Assemble values array WIHOUT IMAGE
       values = [ req.body.trinketName, req.body.trinketCategory, req.body.trinketTerms, req.body.trinketStatus, checkedHolder, req.body.trinketDesc,  id ];
-
     }
 
-    // pool.query to insert item
+    // pool.query to UPDATE item
     await pool.query( queryString, values);
     res.sendStatus(200);
 
@@ -188,24 +188,13 @@ router.put('/', async (req, res)=>{
 
 // DELETE to Delete Trinket
 router.delete('/', async (req,res)=>{
-  console.log('DELETE/:', req.query.id);
-  // const queryString = `BEGIN;
-
-  // DELETE FROM "requests" WHERE message_item = $1;
-  // DELETE FROM "items" WHERE id = $1;
-
-  // COMMIT;`;
-  //   const values = [req.query.id];
-  //   pool.query( queryString, values).then( (results)=>{
-  //     res.sendStatus(200);
-  // }).catch( (err)=>{
-  //     res.sendStatus(500);
-  // })
-
-  const client = await pool.connect(); // Get a database client
+  // console.log('DELETE/:', req.query.id);
+  // Get a database client
+  const client = await pool.connect(); 
 
     try {
-        await client.query('BEGIN'); // Start a transaction
+        // Start a transaction
+        await client.query('BEGIN'); 
 
         // First, delete related requests
         await client.query('DELETE FROM "requests" WHERE message_item = $1', [req.query.id]);
@@ -213,14 +202,17 @@ router.delete('/', async (req,res)=>{
         // Then, delete the item itself
         await client.query('DELETE FROM "items" WHERE id = $1', [req.query.id]);
 
-        await client.query('COMMIT'); // Commit the transaction
+        // Commit the transaction
+        await client.query('COMMIT'); 
         res.sendStatus(200);
     } catch (err) {
-        await client.query('ROLLBACK'); // Roll back changes if an error occurs
+        // Roll back changes if an error occurs
+        await client.query('ROLLBACK'); 
         console.error('Error deleting item:', err);
         res.sendStatus(500);
     } finally {
-        client.release(); // Release the database client
+      // Release the database client
+        client.release(); 
     }
 });
 

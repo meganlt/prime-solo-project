@@ -36,7 +36,7 @@ router.post('/', (req, res)=>{
 
 // ACCEPT borrow request
 router.put('/', (req, res)=>{
-    console.log('PUT:/', req.body);
+    // console.log('PUT:/', req.body);
 
     let newHolder = '';
     let newStatus = '';
